@@ -141,13 +141,18 @@
         <div class="modal-content">
             <h2 style="margin:0 0 12px;font-size:20px;">更新日志</h2>
             <div style="font-size:14px;">
-                <p><strong>1.1 版本（app最新）</strong></p>
+                <p><strong>1.2 版本（app最新）</strong></p>
+                <ul style="margin:4px 0 12px 18px;padding:0;">
+                    <li>添加了Myfreemp3下载联动</li>
+                    <li>安装包不再需要密码</li>
+                </ul>
+                <p><strong>1.1 版本（web最新）</strong></p>
                 <ul style="margin:4px 0 12px 18px;padding:0;">
                     <li>添加了自动连播</li>
                     <li>音频顺序自定义</li>
                     <li>上传多个音频</li>
                 </ul>
-                <p><strong>1.0 版本（现网页版）</strong></p>
+                <p><strong>1.0 版本</strong></p>
                 <ul style="margin:4px 0 0 18px;padding:0;">
                     <li>软件正式发布了</li>
                 </ul>
@@ -163,7 +168,7 @@
     <div class="container">
         <aside class="sidebar">
             <h1 class="title">iMusic for Windows</h1>
-            <button id="downloadBtn" class="download-btn" disabled>即刻获取 v1.1</button>
+            <button id="downloadBtn" class="download-btn" disabled>即刻获取 v1.2</button>
         </aside>
         <main class="content">
             <div class="feature-list">
@@ -185,19 +190,19 @@
                     <div class="feature-icon">😅</div>
                     <div>
                         <h3>你想知道的</h3>
-                        <p>蓝奏云密码:c4ai</p>
+                        <p>蓝奏云密码:i7n8</p>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
-    <button id="passwordBtn" class="password-btn">获取密码</button>
+    <button id="passwordBtn" class="password-btn">免费兑换码</button>
 
     <script>
         let clickCount = 0;
         const maxClicks = 5;
-        const password = "aW11c2ljbWFkZWJ5aXc0Ng==";
+        const password = "asjdjafhaebvfbd";
         const downloadBtn = document.getElementById('downloadBtn');
         const passwordBtn = document.getElementById('passwordBtn');
 
@@ -217,7 +222,7 @@
             randomPosition();
             
             if(clickCount === maxClicks) {
-                alert(`密码已解锁：\n${password}`);
+                alert(`兑换码（暂不可用）已解锁：\n${password}`);
                 downloadBtn.disabled = false;
             }
         });
@@ -234,9 +239,10 @@
 
         // 下载按钮跳转
         downloadBtn.addEventListener('click', () => {
-            window.location.href = "https://wwrm.lanzoue.com/iNXI735mid9g";
+            window.location.href = "https://wwrm.lanzoue.com/ivwaS35mub9g";
         });
     </script>
 </body>
 </html>
+
 
