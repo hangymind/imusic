@@ -6,6 +6,7 @@
     <style>
         :root {
             --primary: #007BFF;
+            --android: #34A853; /* Android主题色 */
             --dark: #2D2D2D;
             --light: #FFFFFF;
         }
@@ -46,13 +47,20 @@
             width: 100%;
             padding: 18px;
             font-size: 1.2em;
-            background: var(--primary);
             color: var(--light);
             border: none;
             border-radius: 8px;
             cursor: pointer;
             transition: transform 0.2s, background 0.3s;
             margin-bottom: 20px;
+        }
+
+        .windows-btn {
+            background: var(--primary);
+        }
+
+        .android-btn {
+            background: var(--android);
         }
 
         .download-btn:disabled {
@@ -90,6 +98,33 @@
             margin-top: 25px;
         }
 
+        .version-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .version-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .version-tab.active {
+            background: #f5f5f5;
+            border: 1px solid #eee;
+            border-bottom: none;
+        }
+
+        .feature-content {
+            display: none;
+        }
+
+        .feature-content.active {
+            display: grid;
+        }
+
         @media (max-width: 768px) {
             .container {
                 grid-template-columns: 1fr;
@@ -111,10 +146,12 @@
             z-index: 9999;
             opacity: 0;
             transition: opacity 0.3s ease;
+            pointer-events: none;
         }
 
         #updateModal.show {
             opacity: 1;
+            pointer-events: auto;
         }
 
         #updateModal .modal-content {
@@ -141,7 +178,7 @@
         <div class="modal-content">
             <h2 style="margin:0 0 12px;font-size:20px;">更新日志</h2>
             <div style="font-size:14px;">
-                <p><strong>1.3 版本(app最新)</strong></p>
+                <p><strong>1.3 版本(Windows最新)</strong></p>
                 <ul style="margin:4px 0 12px 18px;padding:0;">
                     <li>添加了优化动画</li>
                     <li>支持url音乐播放</li>
@@ -149,6 +186,7 @@
                     <li>修复了连播问题</li>
                     <li>更多详情请见软件内更新日志</li>
                 </ul>
+            
                 <p><strong>1.2 版本(网页文件暂时丢失)</strong></p>
                 <ul style="margin:4px 0 12px 18px;padding:0;">
                     <li>添加了Myfreemp3下载联动</li>
@@ -176,26 +214,59 @@
 
     <div class="container">
         <aside class="sidebar">
-            <h1 class="title">iMusic for Windows</h1>
-            <button id="downloadBtn" class="download-btn" disabled>即刻获取 v1.3</button>
+            <h1 class="title">即刻获取iMusic</h1>
+            <button id="windowsDownloadBtn" class="download-btn windows-btn" disabled>Windows 版 v1.3</button>
+            <button id="androidDownloadBtn" class="download-btn android-btn" disabled>Android 版 v1.0</button>
         </aside>
         <main class="content">
-            <div class="feature-list">
-                <div class="feature-item">
-                    <div class="feature-icon">🎵</div>
-                    <div>
-                        <h3>支持上传专辑封面</h3>
-                        <p>不过网页版一直比app低一个版本奥</p>
+            <div class="version-tabs">
+                <div class="version-tab active" data-tab="windows">Windows 版本特性</div>
+                <div class="version-tab" data-tab="android">Android 版本特性</div>
+            </div>
+            
+            <div class="feature-content active" id="windowsFeatures">
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">🎵</div>
+                        <div>
+                            <h3>支持上传专辑封面</h3>
+                            <p>不过网页版一直比app低一个版本奥</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📀</div>
+                        <div>
+                            <h3>人性化播放器</h3>
+                            <p>因为代码是人写的</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔗</div>
+                        <div>
+                            <h3>URL音乐播放</h3>
+                            <p>支持在线音乐链接播放</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📱</div>
+                        <div>
+                            <h3>响应式设计</h3>
+                            <p>完美适配各种屏幕尺寸</p>
+                        </div>
                     </div>
                 </div>
-                <div class="feature-item">
-                    <div class="feature-icon">📀</div>
-                    <div>
-                        <h3>人性化播放器</h3>
-                        <p>因为代码是人写的</p>
+            </div>
+            
+            <div class="feature-content" id="androidFeatures">
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">📱</div>
+                        <div>
+                            <h3>移动端优化</h3>
+                            <p>专为手机和平板设计</p>
+                        </div>
                     </div>
-                </div>
-                
+                   </div>
             </div>
         </main>
     </div>
@@ -205,13 +276,19 @@
     <script>
         let clickCount = 0;
         const maxClicks = 5;
-        const password = "ff99";
-        const downloadBtn = document.getElementById('downloadBtn');
+        const windowsPassword = "ff99";
+        const androidPassword = "7b91";
+        const windowsDownloadBtn = document.getElementById('windowsDownloadBtn');
+        const androidDownloadBtn = document.getElementById('androidDownloadBtn');
         const passwordBtn = document.getElementById('passwordBtn');
+        const versionTabs = document.querySelectorAll('.version-tab');
+        const featureContents = document.querySelectorAll('.feature-content');
 
         // 显示更新日志弹窗（带淡入）
         const updateModal = document.getElementById('updateModal');
-        updateModal.classList.add('show');
+        setTimeout(() => {
+            updateModal.classList.add('show');
+        }, 500);
 
         // 关闭更新日志弹窗（带淡出）
         document.getElementById('closeUpdate').onclick = () => {
@@ -219,14 +296,28 @@
             setTimeout(() => updateModal.style.display = 'none', 300);
         };
 
+        // 版本标签切换
+        versionTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // 移除所有active类
+                versionTabs.forEach(t => t.classList.remove('active'));
+                featureContents.forEach(c => c.classList.remove('active'));
+                
+                // 添加active类到当前标签和内容
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab + 'Features').classList.add('active');
+            });
+        });
+
         // 密码按钮点击事件
         passwordBtn.addEventListener('click', () => {
             clickCount++;
             randomPosition();
             
             if(clickCount === maxClicks) {
-                alert(`蓝奏云密码：\n${password}`);
-                downloadBtn.disabled = false;
+                alert(`Windows版蓝奏云密码：${windowsPassword}\nAndroid版蓝奏云密码：${androidPassword}`);
+                windowsDownloadBtn.disabled = false;
+                androidDownloadBtn.disabled = false;
             }
         });
 
@@ -241,13 +332,13 @@
         }
 
         // 下载按钮跳转
-        downloadBtn.addEventListener('click', () => {
+        windowsDownloadBtn.addEventListener('click', () => {
             window.location.href = "https://wwrm.lanzoue.com/i9cu0361dpba";
+        });
+        
+        androidDownloadBtn.addEventListener('click', () => {
+            window.location.href = "https://wwrm.lanzoue.com/ioWJb361x1uf"; 
         });
     </script>
 </body>
 </html>
-
-
-
-
