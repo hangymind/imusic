@@ -237,10 +237,57 @@ if (localStorage.getItem('theme') === 'light') { //肝帝永不没落！！！�
             playlist.forEach((song, idx) => {
                 const li = document.createElement('li');
                 li.className = 'playlist-item';
-                li.textContent = song.name;
-                li.onclick = () => playSong(idx);
+                
+                // 创建歌曲名称容器
+                const songName = document.createElement('span');
+                songName.textContent = song.name;
+                songName.onclick = () => playSong(idx);
+                li.appendChild(songName);
+                
+                // 创建删除按钮
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'delete-song-btn';
+                deleteBtn.textContent = '×';
+                deleteBtn.onclick = (e) => {
+                    e.stopPropagation(); // 阻止事件冒泡，避免触发播放
+                    removeSong(idx);
+                };
+                li.appendChild(deleteBtn);
+                
                 pl.appendChild(li);
             });
+        }
+        
+        // 删除歌曲函数
+        function removeSong(index) {
+            // 如果删除的是当前播放的歌曲，需要特殊处理
+            const wasCurrentSong = index === currentSongIndex;
+            
+            // 从播放列表中删除歌曲
+            playlist.splice(index, 1);
+            
+            // 如果播放列表为空，清空播放器
+            if (playlist.length === 0) {
+                audioPlayer.src = '';
+                document.getElementById('songTitle').textContent = '暂无歌曲';
+                isPlaying = false;
+                playBtn.textContent = '播放';
+                albumCover.classList.remove('rotating');
+            } else if (wasCurrentSong) {
+                // 如果删除的是当前播放的歌曲，播放下一首
+                // 确保新索引有效
+                currentSongIndex = Math.min(index, playlist.length - 1);
+                audioPlayer.src = playlist[currentSongIndex].url;
+                document.getElementById('songTitle').textContent = playlist[currentSongIndex].name;
+                if (isPlaying) audioPlayer.play();
+            } else if (index < currentSongIndex) {
+                // 如果删除的是当前歌曲之前的歌曲，调整当前索引
+                currentSongIndex--;
+            }
+            
+            // 更新播放列表显示
+            updatePlaylist();
+            renderSortableList();
         }
         function playSong(idx) {
             currentSongIndex = idx;
@@ -271,7 +318,13 @@ if (localStorage.getItem('theme') === 'light') { //肝帝永不没落！！！�
             const v = volumeSlider.value;
             audioPlayer.volume = v / 100;
             volumeValue.textContent = v + '%';
+            const percent = (v / 100) * 100;
+            volumeSlider.style.background = `linear-gradient(to right, #a0a0a0 0%, #a0a0a0 ${percent}%, var(--bg-btn) ${percent}%, var(--bg-btn) 100%)`;
         });
+        
+        const initialVolume = volumeSlider.value;
+        const initialPercent = (initialVolume / 100) * 100;
+        volumeSlider.style.background = `linear-gradient(to right, #a0a0a0 0%, #a0a0a0 ${initialPercent}%, var(--bg-btn) ${initialPercent}%, var(--bg-btn) 100%)`;
         function renderSortableList() {
             const ol = document.getElementById('sortableList');
             ol.innerHTML = '';
