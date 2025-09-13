@@ -370,9 +370,31 @@
                 min-width: 80px;
                 font-size: 12px;
             }
+            .top-buttons {
+                top: 15px;
+                right: 15px;
+                gap: 8px;
+            }
+            
+            .playlist-btn, .settings-btn {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
         }
         
         @media screen and (max-width: 480px) {
+            .top-buttons {
+                top: 10px;
+                right: 10px;
+                gap: 6px;
+            }
+            
+            .playlist-btn, .settings-btn {
+                padding: 8px 12px;
+                font-size: 11px;
+                border-radius: 6px;
+                min-width: fit-content;
+            }
             .floating-action-btn {
                 width: 45px;
                 height: 45px;
@@ -399,6 +421,25 @@
                 width: 22px;
                 height: 22px;
                 font-size: 14px;
+            }
+        }
+        
+        /* 针对触摸设备的优化 */
+        @media (hover: none) and (pointer: coarse) {
+            /* 专为触控屏幕优化的样式 */
+            .top-buttons {
+                top: 10px;
+                right: 10px;
+                gap: 6px;
+            }
+            
+            .playlist-btn, .settings-btn {
+                padding: 10px 14px;
+                font-size: 12px;
+                border-radius: 8px;
+                min-width: fit-content;
+                touch-action: manipulation;
+                user-select: none;
             }
         }
         .upload-btn, .playlist-btn, .settings-btn {
@@ -999,6 +1040,7 @@
                 padding: 15px 25px;
             }
         }
+        
         .song-title, .artist-name {
             overflow: hidden;
             text-overflow: ellipsis;
