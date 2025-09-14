@@ -140,6 +140,7 @@
                 countdownElement.textContent = seconds;
             } else {
                 clearInterval(countdownInterval);
+                window.close();
             }
         }, 1000);
         
