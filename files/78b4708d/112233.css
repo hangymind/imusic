@@ -137,18 +137,27 @@
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
         .album-cover {
+            /* 使用padding-top创建1:1的宽高比容器 */
             width: 300px;
-            height: 300px;
+            height: 0;
+            padding-top: 300px;
             border-radius: 50%;
             background: var(--bg-btn);
-            border: 8px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border: 4px solid var(--border);
             margin-bottom: 20px;
             overflow: hidden;
             box-shadow: 0 0 30px var(--shadow);
             position: relative;
+        }
+        .album-cover-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .album-cover.rotating {
             animation: rotate 20s linear infinite;
@@ -711,17 +720,73 @@
         .settings-page.active {
             display: block;
         }
-        .volume-control,
-        .play-mode,
-        .theme-toggle {
+        .volume-control, .play-mode, .theme-toggle, .update-check {
             margin-bottom: 20px;
         }
+        
+        .update-check {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .update-check label {
+            display: block;
+            min-width: 80px;
+            color: var(--text-sub);
+        }
+        
+        .update-info {
+            margin-bottom: 20px;
+        }
+        
+        .update-info p {
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+        
+        .update-info ul {
+            margin: 10px 0 10px 20px;
+            color: var(--text-sub);
+        }
+        
+        .update-info li {
+            margin-bottom: 5px;
+        }
+        
+        .update-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+        
+        .update-buttons .upload-btn {
+            min-width: 100px;
+        }
         .volume-control label,
-        .play-mode label,
-        .theme-toggle label {
+        .play-mode label {
             display: block;
             margin-bottom: 10px;
             color: var(--text-sub);
+        }
+        
+        .theme-toggle,
+        .border-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .theme-toggle label,
+        .border-toggle label {
+            color: var(--text-sub);
+            margin: 0;
+        }
+        
+        .theme-toggle .theme-switch,
+        .border-toggle .theme-switch {
+            margin-left: 10px;
         }
         .volume-slider {
             width: 100%;
@@ -1019,7 +1084,8 @@
             
             .album-cover {
                 width: 350px;
-                height: 350px;
+                height: 0;
+                padding-top: 350px;
             }
             
             .music-info h2 {
@@ -1029,6 +1095,31 @@
             .lyrics {
                 font-size: 18px;
                 line-height: 2.5;
+            }
+        }
+        
+        /* 为不同分辨率优化专辑封面和搜索框布局 */
+        @media screen and (max-width: 768px) {
+            .album-cover {
+                width: 250px;
+                height: 0;
+                padding-top: 250px;
+            }
+            
+            .search-bar {
+                max-width: 250px;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .album-cover {
+                width: 200px;
+                height: 0;
+                padding-top: 200px;
+            }
+            
+            .search-bar {
+                max-width: 200px;
             }
         }
         @media (hover: none) and (pointer: coarse) {
