@@ -1,12 +1,24 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="nerd.ico">
-    <title>Imusic 提示</title>
+    <title>Imusic提示</title>
     <style>
         :root {
+            --bg-main: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            --bg-panel: rgba(30, 30, 30, 0.7);
+            --bg-btn: rgba(40, 40, 40, 0.8);
+            --bg-btn-hover: rgba(60, 60, 60, 0.8);
+            --text-main: #e0e0e0;
+            --text-sub: #aaa;
+            --text-weak: #666;
+            --border: rgba(255, 255, 255, 0.1);
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+        
+        body.light {
             --bg-main: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
             --bg-panel: rgba(255, 255, 255, 0.7);
             --bg-btn: rgba(220, 220, 220, 0.8);
@@ -16,6 +28,10 @@
             --text-weak: #999;
             --border: rgba(0, 0, 0, 0.1);
             --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        body.light .modal {
+            background: rgba(0, 0, 0, 0.3);
         }
         
         * {
@@ -29,124 +45,291 @@
             background: var(--bg-main);
             color: var(--text-main);
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             overflow: hidden;
-            transition: background .3s, color .3s;
         }
         
-        .container {
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .modal.show {
+            opacity: 1;
+        }
+        
+        .modal-content {
             background: var(--bg-panel);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 10px 30px var(--shadow);
             border: 1px solid var(--border);
-            text-align: center;
-            max-width: 400px;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 500px;
             width: 90%;
-            animation: fadeIn 0.5s ease-in-out;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px var(--shadow);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: var(--text-main);
+            font-size: 24px;
+            text-align: center;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        
+        .theme-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .theme-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--bg-btn);
+            transition: .4s;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+        }
+        
+        .theme-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: var(--text-main);
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .theme-slider {
+            background-color: var(--bg-btn-hover);
+        }
+        
+        input:checked + .theme-slider:before {
+            transform: translateX(30px);
+        }
+        
+        .update-info {
+            margin-bottom: 25px;
+        }
+        
+        .update-info p {
+            margin-bottom: 10px;
+            color: var(--text-sub);
+            font-size: 16px;
+        }
+        
+        .update-info p span {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+        
+        .update-info ul {
+            margin-left: 20px;
+            color: var(--text-sub);
+        }
+        
+        .update-info li {
+            margin-bottom: 5px;
+        }
+        
+        .update-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .upload-btn {
+            background: var(--bg-btn);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+        
+        .upload-btn:hover {
+            background: var(--bg-btn-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .upload-btn:active {
+            transform: translateY(0);
         }
         
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
             }
             to {
                 opacity: 1;
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
                 transform: translateY(0);
+                opacity: 1;
             }
-        }
-        
-        h1 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: var(--text-main);
-            font-weight: 600;
-        }
-        
-        p {
-            font-size: 16px;
-            color: var(--text-sub);
-            margin-bottom: 30px;
-        }
-        
-        #countdown {
-            font-weight: bold;
-            color: #888888;
-            font-size: 20px;
-        }
-        
-        .version-info {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 25px;
-            font-size: 14px;
-            color: var(--text-weak);
-        }
-        
-        .music-icon {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ffffff, #888888);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 30px;
-            box-shadow: 0 5px 15px #999;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 5px 15px rgba(134, 134, 134, 0.3);
-            }
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 5px 20px rgba(90, 90, 90, 0.4);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 5px 15px rgba(63, 63, 63, 0.3);
-            }
-        }
-        
-        .music-icon::after {
-            content: '♪';
-            font-size: 48px;
-            color: black;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="music-icon"></div>
-        <h1>您使用的是最新版本！</h1>
-        <p>此页面将在 <span id="countdown">3</span> 秒后自动关闭</p>
+    <div class="modal" id="updateModal">
+        <div class="modal-content">
+            <div class="theme-toggle">
+                <label class="theme-switch">
+                    <input type="checkbox" id="themeToggle">
+                    <span class="theme-slider"></span>
+                </label>
+            </div>
+            <h3>发现新版本</h3>
+            <div class="update-info">
+
+                <p>最新版本：<span id="latestVersion">1.5</span></p>
+                <p>更新提示：<br>
+                    <ul id="updateContent">
+                        <li>我们将停止对老版本的一切支持所以请尽快更新</li>
+                       
+                    </ul>
+                </p>
+            </div>
+            <div class="update-buttons">
+                <button class="upload-btn" id="downloadUpdateBtn">立即更新</button>
+                <button class="upload-btn" onclick="closeModal('updateModal')">稍后</button>
+            </div>
+        </div>
     </div>
-    
+
     <script>
-        let seconds = 3;
-        const countdownElement = document.getElementById("countdown");
-        
-        const countdownInterval = setInterval(() => {
-            seconds--;
-            if (seconds >= 0) {
-                countdownElement.textContent = seconds;
-            } else {
-                clearInterval(countdownInterval);
-                window.close();
+        const savedTheme = localStorage.getItem('theme') || 
+                           (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+
+        if (savedTheme === 'light') {
+            document.body.classList.add('light');
+            document.getElementById('themeToggle').checked = true;
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                showModal('updateModal');
+            }, 500);
+            document.getElementById('themeToggle').addEventListener('change', function() {
+                if (this.checked) {
+                    document.body.classList.add('light');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.body.classList.remove('light');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        });
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'flex';
+           
+                void modal.offsetWidth;
+                modal.classList.add('show');
             }
-        }, 1000);
-        
-        setTimeout(() => {
-            window.close();
-        }, 3000);
+        }
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('show');
+                setTimeout(function() {
+                    window.close();
+                }, 300);
+            }
+        }
+        document.getElementById('downloadUpdateBtn').addEventListener('click', function() {
+            
+            // 尝试使用自定义URI协议方案，这需要程序预先在系统注册
+            function tryOpenWithCustomProtocol() {
+                // 为不同可能的协议处理器创建尝试
+                const protocols = [
+                    'imusic://update',  // 假设程序注册了imusic协议
+                    'file:///C:/Program%20Files/Imusic/unins000.exe'
+                ];
+                
+                let opened = false;
+                
+                for (const protocol of protocols) {
+                    try {
+                        // 设置一个短暂的时间延迟来检测是否成功打开
+                        const startTime = Date.now();
+                        const openResult = window.open(protocol);
+                        
+                        // 检查是否成功打开
+                        if (openResult) {
+                            opened = true;
+                            openResult.close(); // 如果打开了新标签页，则关闭它
+                            break;
+                        }
+                    } catch (error) {
+                        console.log('尝试打开失败:', protocol, error);
+                    }
+                }
+                
+                // 如果所有尝试都失败，提示用户手动打开
+                if (!opened) {
+                    setTimeout(function() {
+                        alert('请手动打开 C:\\Program Files\\Imusic\\unins000.exe 以完成更新');
+                    }, 100);
+                }
+            }
+            
+            // 执行尝试打开操作
+            tryOpenWithCustomProtocol();
+            
+            // 同时打开在线更新页面作为备选
+            setTimeout(function() {
+                window.open('https://easylink.cc/kz521p', '_blank');
+            }, 1000);
+            
+            // 关闭弹窗
+            closeModal('updateModal');
+        });
     </script>
 </body>
 </html>
+
