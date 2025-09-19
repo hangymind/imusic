@@ -118,37 +118,49 @@
 
     <div class="modal" id="uploadModal">
         <div class="modal-content">
-            <h3>上传文件</h3>
+            <div class="modal-header">
+                <h3>上传文件</h3>
+                <button class="modal-close-btn" onclick="closeModal('uploadModal')">✕</button>
+            </div>
             <div class="file-input">
                 <label>选择音乐文件（可多选）:</label>
                 <input type="file" id="musicFile" accept="audio/*" multiple>
             </div>
-            <button class="close-btn" onclick="closeModal('uploadModal')">关闭</button>
+
         </div>
     </div>
     <div class="modal" id="lyricsModal">
         <div class="modal-content">
-            <h3>上传歌词</h3>
+            <div class="modal-header">
+                <h3>上传歌词</h3>
+                <button class="modal-close-btn" onclick="closeModal('lyricsModal')">✕</button>
+            </div>
             <div class="file-input">
                 <label>选择歌词文件 (LRC/TXT):</label>
                 <input type="file" id="lyricsFile" accept=".lrc,.txt">
             </div>
-            <button class="close-btn" onclick="closeModal('lyricsModal')">关闭</button>
+
         </div>
     </div>
     <div class="modal" id="coverModal">
         <div class="modal-content">
-            <h3>上传封面</h3>
+            <div class="modal-header">
+                <h3>上传封面</h3>
+                <button class="modal-close-btn" onclick="closeModal('coverModal')">✕</button>
+            </div>
             <div class="file-input">
                 <label>选择图片文件:</label>
                 <input type="file" id="coverFile" accept="image/*">
             </div>
-            <button class="close-btn" onclick="closeModal('coverModal')">关闭</button>
+
         </div>
     </div>
     <div class="modal" id="urlModal">
         <div class="modal-content">
-            <h3>添加音乐URL</h3>
+            <div class="modal-header">
+                <h3>添加音乐URL</h3>
+                <button class="modal-close-btn" onclick="closeModal('urlModal')">✕</button>
+            </div>
             <div class="url-input-section">
                 <label for="musicUrl">音乐URL:</label>
                 <input type="text" id="musicUrl" placeholder="输入音乐URL...">
@@ -163,25 +175,31 @@ https://example.com/song2.mp3
 ..."></textarea>
                 <button class="add-btn" id="addBatchUrlsBtn">批量添加</button>
             </div>
-            <button class="close-btn" id="importPlaylistBtn" title="从JSON文件导入歌单,仅支持url音乐" style="margin-bottom: 10px;">导入歌单</button>
+            <button class="upload-btn" id="importPlaylistBtn" title="从JSON文件导入歌单,仅支持url音乐" style="margin-bottom: 10px;">导入歌单</button>
             <p id="urlAddStatus" style="margin-top: 10px; color: var(--text-sub); font-size: 12px;"></p>
-            <button class="close-btn" onclick="closeModal('urlModal')">关闭</button>
+
         </div>
     </div>
 
     <div class="modal" id="playlistModal">
         <div class="modal-content">
-            <h3>播放列表</h3>
+            <div class="modal-header">
+                <h3>播放列表</h3>
+                <button class="modal-close-btn" onclick="closeModal('playlistModal')">✕</button>
+            </div>
             <ul class="playlist" id="playlist"></ul>
             <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
                 <button class="close-btn" id="exportPlaylistBtn" title="将当前歌单导出为JSON文件,仅支持url音乐" onclick="exportPlaylist(); return false;">导出歌单</button>
-                <button class="close-btn" onclick="closeModal('playlistModal')">关闭</button>
+    
             </div>
         </div>
     </div>
     <div class="modal" id="changelogModal">
         <div class="modal-content">
-            <h3>更新日志</h3>
+            <div class="modal-header">
+                <h3>更新日志</h3>
+                <button class="modal-close-btn" onclick="closeChangelogModal()">✕</button>
+            </div>
             <div class="changelog-content">
                 <div class="changelog-item">
                     <h4>1.6 更新内容</h4>
@@ -199,13 +217,16 @@ https://example.com/song2.mp3
                 <input type="checkbox" id="dontShowAgain">
                 <label for="dontShowAgain">不再显示更新日志</label>
             </div>
-            <button class="close-btn" onclick="closeChangelogModal()">关闭</button>
+
         </div>
     </div>
     
     <div class="modal" id="settingsModal">
         <div class="modal-content">
-            <h3>设置</h3>
+            <div class="modal-header">
+                <h3>设置</h3>
+                <button class="modal-close-btn" onclick="closeModal('settingsModal')">✕</button>
+            </div>
             <div class="settings-container">
                 <div class="settings-sidebar">
                     <div class="settings-item active" data-page="playback">通用设置</div>
@@ -272,7 +293,7 @@ https://example.com/song2.mp3
                     </div>
                 </div>
             </div>
-            <button class="close-btn" onclick="closeModal('settingsModal')">关闭</button>
+
         </div>
     </div>
     <!--移除的更新提示弹窗qwq-->
@@ -297,7 +318,10 @@ https://example.com/song2.mp3
   
     <div class="modal" id="renameModal">
         <div class="modal-content">
-            <h3>重命名歌曲</h3>
+            <div class="modal-header">
+                <h3>重命名歌曲</h3>
+                <button class="modal-close-btn" onclick="closeModal('renameModal')">✕</button>
+            </div>
             <div class="url-input-section">
                 <label for="newSongName">新的歌曲名称：</label>
                 <input type="text" id="newSongName" placeholder="输入新的歌曲名称...">
@@ -311,7 +335,10 @@ https://example.com/song2.mp3
     </div>
     <div class="modal" id="cropCoverModal">
         <div class="modal-content" style="max-width: 600px;">
-            <h3>裁剪专辑封面</h3>
+            <div class="modal-header">
+                <h3>裁剪专辑封面</h3>
+                <button class="modal-close-btn" onclick="closeModal('cropCoverModal')">✕</button>
+            </div>
             <div class="crop-container" style="position: relative; width: 100%; height: 300px; background: var(--bg-btn); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
                 <div id="imagePreview" style="position: relative; max-width: 100%; max-height: 100%;">
                     <img id="cropImage" src="" alt="专辑封面" style="max-width: 100%; max-height: 100%; display: none;">
@@ -355,5 +382,4 @@ https://example.com/song2.mp3
 </body>
 
 </html>
-
 
