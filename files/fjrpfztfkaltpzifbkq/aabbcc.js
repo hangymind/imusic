@@ -645,91 +645,13 @@ if (localStorage.getItem('theme') === 'light') { //肝帝永不没落！！！�
         });
         
         
-        document.getElementById('checkUpdateBtn').addEventListener('click', checkForUpdates);
-        const downloadUpdateBtn = document.getElementById('downloadUpdateBtn');
-        if (downloadUpdateBtn) {
-            downloadUpdateBtn.addEventListener('click', () => {
-                window.open('https://imusicapp.netlify.app/files/download/latest', '_blank');
-                closeModal('updateModal');
-            });
-        }
         
-        function handleVersionCheck(latestVersion) {
-            const updateStatus = document.getElementById('updateStatus');
-            const currentVersion = '1.3';
-            
-            console.log('使用备选方案处理版本检查:', latestVersion);
-            
-            try {
-                latestVersion = latestVersion.trim();
-                if (!latestVersion.match(/^\d+(\.\d+)*$/)) {
-                    throw new Error(`无效的版本号格式: ${latestVersion}`);
-                }
-                
-                console.log('处理后的版本号:', latestVersion);
-                
-                if (isNewerVersion(latestVersion, currentVersion)) {
-                    updateStatus.textContent = '发现新版本！';
-                    updateStatus.style.color = '#4CAF50';
-                    
-                    document.getElementById('latestVersion').textContent = latestVersion;
-                    
-                    const updateContent = [
-                        '修复已知bug',
-                        '优化用户界面',
-                        '提升性能体验',
-                        '新增功能支持'
-                    ];
-                    
-                    const contentList = document.getElementById('updateContent');
-                    contentList.innerHTML = '';
-                    updateContent.forEach(item => {
-                        const li = document.createElement('li');
-                        li.textContent = item;
-                        contentList.appendChild(li);
-                    });
-                    
-                    const modal = document.getElementById('updateModal');
-                    modal.style.display = 'flex';
-                    void modal.offsetWidth;
-                    modal.classList.add('show');
-                } else {
-                    updateStatus.textContent = '已是最新版本';
-                    updateStatus.style.color = '#646464';
-                }
-            } catch (error) {
-                console.error('版本检查处理失败:', error);
-                updateStatus.textContent = `版本检查失败: ${error.message}`;
-                updateStatus.style.color = '#f44336';
-            }
-        }
+        
         window.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
         
-        function checkForUpdates() {
-            const updateStatus = document.getElementById('updateStatus');
-           
-            
-            window.open('https://imusicapp.netlify.app/files/ver/check', '_blank');
-            setTimeout(() => {
-               
-            }, 1000);
-        }
         
-        function isNewerVersion(latestVersion, currentVersion) {
-           
-            const latest = latestVersion.split('.').map(Number);
-            const current = currentVersion.split('.').map(Number);
-            
-            for (let i = 0; i < Math.max(latest.length, current.length); i++) {
-                const l = latest[i] || 0;
-                const c = current[i] || 0;
-                if (l > c) return true;
-                if (l < c) return false;
-            }
-            return false;
-        }
         let cropOffsetX = 0;
         let cropOffsetY = 0;
         let isDragging = false;
