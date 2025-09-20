@@ -202,19 +202,15 @@ https://example.com/song2.mp3
             </div>
             <div class="changelog-content">
                 <div class="changelog-item">
-                    <h4>新版本:1.6.1b</h4>
-                    <ul>
-                        
-                        <li>添加了调试功能</li>
-                        <li>添加了一些整活内容</li>
-                        
-                        
+                    <h4>新版本:1.6.2b</h4>
+                    <ul>                     
+                       <li>添加了显示完整更新日志</li>
+                        <li>添加了服务政策和隐私协议</li>
                     </ul>
                     <h4>Imusic 通知</h4>
                     <ul>
-                        <li>hotfix#2 现在不可复制文字</li>
                         <li>Imusic现在采用热更新模式</li>
-                        <li>Build:1.6.1b25y09m20d-12h07m30s</li>
+                        <li>Build:1.6.2b25y09m20d-22h32m32s</li>
                     </ul>
                     
                 </div>
@@ -246,6 +242,11 @@ https://example.com/song2.mp3
                             <label>音量调节</label>
                             <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="100">
                             <span id="volumeValue">100%</span>
+                        </div>
+                        
+                        <div class="update-check" style="margin-top: 15px;">
+                            <label>更新日志</label>
+                            <button class="upload-btn" id="viewChangelogBtn">查看更新日志</button>
                         </div>
                         
                         <!--<div class="update-check">
@@ -291,11 +292,15 @@ https://example.com/song2.mp3
                     <div id="about-settings" class="settings-page">
                         <div class="about-content">
                             <h4>关于</h4>
-                            <p>版本：1.6.1b</p>
+                            <p>版本：1.6.2b</p>
                             <p>作者：iw46</p>
                             <p>Bug修复:Doubao-speed-1.6</p>
-                            <p>Build: 1.6.1b20250920-12h07m30s</p>
+                            <p>Build: 1.6.2b25y09m20d-22h32m32s</p>
                             <p>© iw46Team 2025</p>
+                            <div style="margin-top: 10px;">
+                                <a href="https://imusicapp.netlify.app/files/yinsi1" target="_blank" style="color: var(--primary-color); text-decoration: none; margin-right: 15px;">隐私协议</a>
+                                <a href="https://imusicapp.netlify.app/files/ver/fuwu1" target="_blank" style="color: var(--primary-color); text-decoration: none;">服务政策</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -372,9 +377,7 @@ https://example.com/song2.mp3
     <script src="doubao1.6-logic.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Build version:MjAyNTA5MTkwMDE2');
-            console.log('页面加载完成，导出功能自检');
-            if (window.playlist) {
+                        if (window.playlist) {
                 console.log('window.playlist存在，长度为:', window.playlist.length);
             } else {
                 console.log('window.playlist不存在');
@@ -389,7 +392,6 @@ https://example.com/song2.mp3
 </body>
 
 </html>
-
 
 
 
