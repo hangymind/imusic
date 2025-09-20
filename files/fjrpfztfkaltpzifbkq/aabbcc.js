@@ -316,7 +316,7 @@ if (localStorage.getItem('theme') === 'light') { //肝帝永不没落！！！�
                 document.getElementById('songTitle').textContent = playlist[currentSongIndex].name;
                 audioPlayer.play();
                 isPlaying = true;
-                playBtn.textContent = '暂停';
+                playBtn.textContent = '⏸';
                 albumCover.classList.add('rotating');
             }
         });
@@ -931,4 +931,5 @@ if (localStorage.getItem('theme') === 'light') { //肝帝永不没落！！！�
                     updateCropPosition();
                 }, 100);
             }
+
         });
