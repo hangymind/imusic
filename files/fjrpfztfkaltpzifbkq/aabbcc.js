@@ -483,6 +483,10 @@ if (localStorage.getItem('theme') === 'light') { //肝帝永不没落！！！�
                 document.getElementById('cancelRenameBtn').click();
             }
         });
+        document.body.onselectstart = (e) => {
+e.preventDefault();
+return false;
+};
         function removeSong(index) {
             const wasCurrentSong = index === currentSongIndex;
             playlist.splice(index, 1);
@@ -933,3 +937,5 @@ if (localStorage.getItem('theme') === 'light') { //肝帝永不没落！！！�
             }
 
         });
+
+
