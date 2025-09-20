@@ -75,7 +75,7 @@ function showTopRightToast(message, duration = 3000) {
 }
 window.addEventListener('load', () => {
     if (showToastOnLoad) {
-        showTopRightToast('Released by iw46Team'); //我在这输入文字
+        showTopRightToast('浮世大人举世无双，浮世大人沉鱼落雁'); //我在这输入文字
     }
 });
 
@@ -937,5 +937,6 @@ return false;
             }
 
         });
+
 
 
