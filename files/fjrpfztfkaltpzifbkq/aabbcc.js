@@ -75,7 +75,7 @@ function showTopRightToast(message, duration = 3000) {
 }
 window.addEventListener('load', () => {
     if (showToastOnLoad) {
-        showTopRightToast('浮世大人举世无双，浮世大人沉鱼落雁'); //我在这输入文字
+        showTopRightToast('在座的各位都是芙宁娜的勾❤'); //我在这输入文字
     }
 });
 
@@ -1042,5 +1042,6 @@ return false;
                     updateCropPosition();
                 }, 100);
             }
+
 
         });
