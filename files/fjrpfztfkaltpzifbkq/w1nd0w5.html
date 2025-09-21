@@ -202,15 +202,15 @@ https://example.com/song2.mp3
             </div>
             <div class="changelog-content">
                 <div class="changelog-item">
-                    <h4>新版本:1.6.2b</h4>
+                    <h4>新版本:1.6.3</h4>
                     <ul>                     
-                       <li>在通用设置里添加了查看更新日志功能</li>
-                        <li>添加了服务政策和隐私协议</li>
+                       <li>对动画进行了优化修改，正式发布主题颜色自定义</li>
+                        <li>添加了自定义发光颜色</li>
                     </ul>
                     <h4>Imusic 通知</h4>
                     <ul>
                         <li>Imusic现在采用热更新模式</li>
-                        <li>Build:1.6.2b25y09m20d-22h32m32s</li>
+                        <li>Build:1.6.325y09m21d-14h41m23s</li>
                     </ul>
                     
                 </div>
@@ -277,12 +277,21 @@ https://example.com/song2.mp3
                         </div>
                         
                          <div class="theme-color-custom" style="margin-top: 20px;">
-                            <label style="display: block; margin-bottom: 10px; color: var(--text-sub);">自定义主题色(Beta)</label>
+                            <label style="display: block; margin-bottom: 10px; color: var(--text-sub);">自定义主题色</label>
                             <div style="display: flex; gap: 10px; align-items: center;">
                                 <input type="color" id="primaryColorPicker" value="#ffffff" style="width: 50px; height: 30px; border-radius: 4px; border: none; cursor: pointer;">
                                 <button class="upload-btn" id="resetThemeBtn" style="padding: 6px 12px; font-size: 12px;">重置颜色</button>
                             </div>
                             <p style="font-size: 12px; color: var(--text-weak); margin-top: 5px;">选择喜欢的主题色，将应用于按钮、滑块等元素</p>
+                        </div>
+                         
+                        <div class="theme-glow-custom" style="margin-top: 20px;">
+                            <label style="display: block; margin-bottom: 10px; color: var(--text-sub);">发光颜色设置(Beta)</label>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <input type="color" id="glowColorPicker" value="#ffffff" style="width: 50px; height: 30px; border-radius: 4px; border: none; cursor: pointer;">
+                                <button class="upload-btn" id="resetGlowBtn" style="padding: 6px 12px; font-size: 12px;">重置发光色</button>
+                            </div>
+                            <p style="font-size: 12px; color: var(--text-weak); margin-top: 5px;">选择加载界面图片发光和歌词高亮发光颜色</p>
                         </div>
                     </div>
                     <div id="order-settings" class="settings-page">
@@ -292,10 +301,10 @@ https://example.com/song2.mp3
                     <div id="about-settings" class="settings-page">
                         <div class="about-content">
                             <h4>关于</h4>
-                            <p>版本：1.6.2b</p>
+                            <p>版本：1.6.3</p>
                             <p>作者：iw46</p>
                             <p>Bug修复:Doubao-speed-1.6</p>
-                            <p>Build: 1.6.2b25y09m20d-22h32m32s</p>
+                            <p>Build: 1.6.325y09m21d-14h41m23s</p>
                             <p>© iw46Team 2025</p>
                             <div style="margin-top: 10px;">
                                 <a href="https://imusicapp.netlify.app/files/yinsi1" target="_blank" style="color: var(--primary-color); text-decoration: none; margin-right: 15px;">隐私协议</a>
@@ -392,9 +401,3 @@ https://example.com/song2.mp3
 </body>
 
 </html>
-
-
-
-
-
-
