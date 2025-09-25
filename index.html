@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="nerd.ico">
+    <title>Imusic 下载</title>
+    <link rel="stylesheet" href="download_style.css">
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <img src="https://imusicapp.netlify.app/files/fjrpfztfkaltpzifbkq/musicwt.png" alt="Imusic" class="loading-image">
+        </div>
+    </div>
+
+    <div class="top-buttons">
+        <button class="playlist-btn" id="changelogBtn" title="查看更新日志"><i class="fa fa-history" aria-hidden="true" style="font-size:25px;"></i></button>
+        <button class="settings-btn" id="themeBtn" title="主题切换"><i class="fa fa-moon-o" aria-hidden="true" style="font-size:25px;"></i></button>
+    </div>
+
+    <div class="container" style="flex-direction: column; justify-content: center; align-items: center; gap: 40px; padding: 40px;">
+        <div class="app-logo" style="text-align: center;">
+            <img src="https://upload-bbs.miyoushe.com/upload/2023/07/05/76548703/9de20d6d6ce5701fd6d7ba1bc94e690b_9201258646247668763.jpg" alt="Imusic Logo" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 30px var(--glow-color);">
+            <h1 style="margin-top: 30px; font-size: 48px; color: var(--primary-color);">Imusic</h1>
+            <p style="margin-top: 10px; font-size: 18px; color: var(--text-sub);">您所选定的新音乐播放器</p>
+        </div>
+
+        <div class="download-section" style="width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 20px;">
+            
+            <div class="download-item" style="background: var(--bg-panel); border-radius: 16px; padding: 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 8px 32px var(--shadow);">
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <i class="fa fa-windows" aria-hidden="true" style="font-size: 48px; color: var(--primary-color);"></i>
+                    <div>
+                        <h3 style="font-size: 22px; color: var(--text-main);">Imusic for Windows</h3>
+                        <p style="font-size: 14px; color: var(--text-sub);">版本: 1.7.0</p>
+                    </div>
+                </div>
+                <button class="upload-btn" onclick="showDownloadInfo('Windows')" style="padding: 12px 24px; font-size: 16px;">立即下载</button>
+            </div>
+
+            <div class="download-item" style="background: var(--bg-panel); border-radius: 16px; padding: 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 8px 32px var(--shadow);">
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <i class="fa fa-android" aria-hidden="true" style="font-size: 48px; color: var(--primary-color);"></i>
+                    <div>
+                        <h3 style="font-size: 22px; color: var(--text-main);">Imusic for Android</h3>
+                        <p style="font-size: 14px; color: var(--text-sub);">版本: 1.7.0</p>
+                    </div>
+                </div>
+                <button class="upload-btn" onclick="showDownloadInfo('Android')" style="padding: 12px 24px; font-size: 16px;">立即下载</button>
+            </div>
+
+            <div class="download-item" style="background: var(--bg-panel); border-radius: 16px; padding: 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 8px 32px var(--shadow);">
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <i class="fa fa-apple" aria-hidden="true" style="font-size: 48px; color: var(--primary-color);"></i>
+                    <div>
+                        <h3 style="font-size: 22px; color: var(--text-main);">Imusic for MacOS</h3>
+                        <p style="font-size: 14px; color: var(--text-sub);">版本: 1.7.0</p>
+                    </div>
+                </div>
+                <button class="upload-btn" onclick="showDownloadInfo('MacOS')" style="padding: 12px 24px; font-size: 16px;">立即下载</button>
+            </div>
+        </div>
+
+        
+
+        <div class="footer" style="text-align: center; margin-top: 10px; color: var(--text-weak); font-size: 14px;">
+            <p>© 2025 iw46Team</p>
+        </div>
+    </div>
+    <div class="modal" id="downloadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="downloadModalTitle">下载信息</h3>
+                <button class="modal-close-btn" onclick="closeModal('downloadModal')">✕</button>
+            </div>
+            <div class="download-info">
+                <p id="downloadPlatformName" style="margin-bottom: 15px; font-size: 18px; font-weight: bold;"></p>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                    <span id="downloadVersion">版本: 1.7.0</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                    <i></i>
+                    <span id="downloadSize"></span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                    <i></i>
+                    <span></span>
+                </div>
+                <button id="startDownloadBtn" class="upload-btn" style="width: 100%; padding: 15px; font-size: 18px;">开始下载</button>
+                <p style="text-align: center; margin-top: 15px; color: var(--text-sub); font-size: 13px;">下载完成后，请按照安装向导进行操作</p>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="changelogModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>更新日志</h3>
+                <button class="modal-close-btn" onclick="closeModal('changelogModal')">✕</button>
+            </div>
+            <div class="changelog-content">
+                <div class="changelog-item">
+                    <h4>1.6.0+</h4>
+                    <h4>Imusic 通知</h4>
+                    <ul>
+                        <li>Imusic现在采用热更新模式</li>
+                        <li>详细更新日志请在软件内查看</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const loadingOverlay = document.getElementById('loadingOverlay');
+                loadingOverlay.classList.add('fade-out');
+                setTimeout(function() {
+                    document.getElementById('changelogModal').style.display = 'flex';
+                }, 1010);
+            }, 1000);
+        });
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = themeBtn.querySelector('i');
+        if (localStorage.getItem('theme') === 'light' || 
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            document.body.classList.add('light');
+            themeIcon.classList.remove('fa-moon-o');
+            themeIcon.classList.add('fa-sun-o');
+        }
+
+        themeBtn.addEventListener('click', function() {
+            document.body.classList.toggle('light');
+            
+            if (document.body.classList.contains('light')) {
+                localStorage.setItem('theme', 'light');
+                themeIcon.classList.remove('fa-moon-o');
+                themeIcon.classList.add('fa-sun-o');
+            } else {
+                localStorage.setItem('theme', 'dark');
+                themeIcon.classList.remove('fa-sun-o');
+                themeIcon.classList.add('fa-moon-o');
+            }
+        });
+        function showDownloadInfo(platform) {
+            const downloadModal = document.getElementById('downloadModal');
+            const downloadModalTitle = document.getElementById('downloadModalTitle');
+            const downloadPlatformName = document.getElementById('downloadPlatformName');
+            const downloadSize = document.getElementById('downloadSize');
+            const startDownloadBtn = document.getElementById('startDownloadBtn');
+            
+            let size = '';
+            let icon = '';
+            
+            switch(platform) {
+                case 'Windows':
+                    size = '120MB';
+                    icon = 'fa-windows';
+                    break;
+                case 'Android':
+                    size = '45MB';
+                    icon = 'fa-android';
+                    break;
+                case 'MacOS':
+                    size = '140MB';
+                    icon = 'fa-apple';
+                    break;
+            }
+            
+            downloadModalTitle.textContent = `下载 ${platform} 版本`;
+            downloadPlatformName.innerHTML = `<i class="fa ${icon}" aria-hidden="true" style="margin-right: 10px;"></i> Imusic for ${platform}`;
+            startDownloadBtn.onclick = function() {
+                let downloadUrl = '';
+                
+                switch(platform) {
+                    case 'Windows':
+                        downloadUrl = 'https://easylink.cc/urfjj0';
+                        break;
+                    case 'Android':
+                        downloadUrl = 'https://easylink.cc/aguik5';
+                        break;
+                    case 'MacOS':
+                        downloadUrl = 'https://easylink.cc/clh74a';
+                        break;
+                }
+                window.open(downloadUrl, '_blank');
+                closeModal('downloadModal');
+            };
+            
+            downloadModal.style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'none';
+        }
+        document.getElementById('changelogBtn').addEventListener('click', function() {
+            const changelogModal = document.getElementById('changelogModal');
+            changelogModal.style.display = 'flex';
+            changelogModal.style.zIndex = '9999';
+        });
+        window.addEventListener('click', function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

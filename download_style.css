@@ -1,0 +1,422 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-height: 100vh;
+}
+:root {
+    --bg-main: #121212;
+    --bg-panel: #1e1e1e;
+    --text-main: #ffffff;
+    --text-sub: #b3b3b3;
+    --text-weak: #808080;
+    --primary-color: #3e82ff;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --glow-color: rgba(15, 88, 182, 0.5);
+}
+
+/* 浅色主题 */
+body.light {
+    --bg-main: #f5f5f5;
+    --bg-panel: #ffffff;
+    --text-main: #333333;
+    --text-sub: #666666;
+    --text-weak: #999999;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* 加载动画 */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    transition: opacity 0.5s ease;
+}
+
+.loading-overlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loading-content {
+    text-align: center;
+}
+
+.loading-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* 顶部按钮 */
+.top-buttons {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    z-index: 1000;
+}
+
+.playlist-btn, .settings-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--bg-panel);
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.playlist-btn:hover, .settings-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px var(--shadow);
+}
+
+/* 主容器 */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 40px;
+    min-height: 100vh;
+}
+
+/* 应用Logo */
+.app-logo {
+    text-align: center;
+}
+
+.app-logo img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 30px var(--glow-color);
+}
+
+.app-logo h1 {
+    margin-top: 30px;
+    font-size: 48px;
+    color: var(--primary-color);
+}
+
+.app-logo p {
+    margin-top: 10px;
+    font-size: 18px;
+    color: var(--text-sub);
+}
+
+/* 下载区域 */
+.download-section {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.download-item {
+    background: var(--bg-panel);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 8px 32px var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.download-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px var(--shadow);
+}
+
+.download-item > div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.download-item i {
+    font-size: 48px;
+    color: var(--primary-color);
+}
+
+.download-item h3 {
+    font-size: 22px;
+    color: var(--text-main);
+}
+
+.download-item p {
+    font-size: 14px;
+    color: var(--text-sub);
+}
+
+/* 上传按钮/下载按钮 */
+.upload-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(15, 88, 182, 0.5);
+}
+
+.upload-btn:hover {
+    background: #3e64ff;
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(15, 88, 182, 0.5);
+}
+
+/* 页脚 */
+.footer {
+    text-align: center;
+    margin-top: 10px;
+    color: var(--text-weak);
+    font-size: 14px;
+}
+
+/* 模态框样式 */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+    transition: opacity 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--bg-panel);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.light .modal-header {
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.modal-header h3 {
+    color: var(--text-main);
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    color: var(--text-sub);
+    font-size: 24px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.modal-close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+}
+
+/* 下载信息模态框内容 */
+.download-info {
+    padding: 24px;
+}
+
+.download-info p {
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--text-main);
+}
+
+.download-info > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    color: var(--text-sub);
+}
+
+#startDownloadBtn {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+/* 更新日志内容 */
+.changelog-content {
+    padding: 24px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.changelog-item h4 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.changelog-item ul {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.changelog-item li {
+    color: var(--text-sub);
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.changelog-item li::before {
+    content: "•";
+    color: var(--primary-color);
+    position: absolute;
+    left: 0;
+    font-size: 1.2em;
+}
+
+/* 动画效果 */
+@keyframes glow {
+    from {
+        box-shadow: 0 0 10px var(--glow-color);
+    }
+    to {
+        box-shadow: 0 0 20px var(--glow-color), 0 0 30px var(--glow-color);
+    }
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        gap: 30px;
+    }
+    
+    .app-logo img {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .app-logo h1 {
+        font-size: 36px;
+    }
+    
+    .download-item {
+        padding: 16px;
+    }
+    
+    .download-item i {
+        font-size: 36px;
+    }
+    
+    .download-item h3 {
+        font-size: 18px;
+    }
+    
+    .upload-btn {
+        padding: 10px 18px;
+        font-size: 14px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-buttons {
+        top: 10px;
+        right: 10px;
+        gap: 10px;
+    }
+    
+    .playlist-btn, .settings-btn {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .playlist-btn i, .settings-btn i {
+        font-size: 20px !important;
+    }
+    
+    .download-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .download-item > div {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
