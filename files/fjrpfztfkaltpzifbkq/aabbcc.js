@@ -986,16 +986,16 @@ return false;
             }
             closeModal('changelogModal');
         }
-        function checkShowChangelog() { //989-1005:强制更新方法
+        function checkShowChangelog() { //989-1015:强制更新方法，注释1008-1015事件监听器，以及checkchangelog下带有forceupdate的全部内容
             setTimeout(() => {
                 const modal = document.getElementById('changelogModal');
-            //    const forceUpdate = document.getElementById('forceUpdate');
-              //  forceUpdate.style.display = 'flex';
+               const forceUpdate = document.getElementById('forceUpdate');
+                forceUpdate.style.display = 'flex';
                 modal.style.display = 'flex';
-           //     void forceUpdate.offsetWidth;
+                void forceUpdate.offsetWidth;
                 void modal.offsetWidth;
                 modal.classList.add('show');
-            //    forceUpdate.classList.add('show');
+                forceUpdate.classList.add('show');
             }, 1000);
         }
         window.addEventListener('load', checkShowChangelog);
@@ -1005,14 +1005,14 @@ return false;
                 loadingOverlay.classList.add('fade-out');
             }, 1500);
         });
-        //window.addEventListener('load', () => {
-        //    const downloadBtn = document.getElementById('downloadUpdateBtn');
-        //    if (downloadBtn) {
-        //        downloadBtn.addEventListener('click', () => {
-        //            window.open('https://imusicapp.netlify.app/', '_blank');
-        //        });
-        //    }
-        //});
+        window.addEventListener('load', () => {
+            const downloadBtn = document.getElementById('downloadUpdateBtn');
+           if (downloadBtn) {
+               downloadBtn.addEventListener('click', () => {
+                   window.open('https://imusicapp.netlify.app/', '_blank');
+                });
+           }
+        });
         window.updatePlaylist = updatePlaylist;
         window.renderSortableList = renderSortableList;
         
@@ -1360,4 +1360,5 @@ return false;
                     console.log(`[水印调试] ${message}`);
                 }
             }
+
         })
