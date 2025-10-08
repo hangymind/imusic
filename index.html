@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="https://imusicapp.netlify.app/files/fjrpfztfkaltpzifbkq/nerd.ico">
+    <link rel="icon" type="image/x-icon" href="nerd.ico">
     <title>Imusic 下载</title>
     <link rel="stylesheet" href="download_style.css">
 </head>
@@ -34,7 +34,7 @@
                     <i class="fa fa-windows" aria-hidden="true" style="font-size: 48px; color: var(--primary-color);"></i>
                     <div>
                         <h3 style="font-size: 22px; color: var(--text-main);">Imusic for Windows</h3>
-                        <p style="font-size: 14px; color: var(--text-sub);">版本: 1.7.0</p>
+                        <p style="font-size: 14px; color: var(--text-sub);">版本: 1.8.0</p>
                     </div>
                 </div>
                 <button class="upload-btn" onclick="showDownloadInfo('Windows')" style="padding: 12px 24px; font-size: 16px;">立即下载</button>
@@ -45,7 +45,7 @@
                     <i class="fa fa-android" aria-hidden="true" style="font-size: 48px; color: var(--primary-color);"></i>
                     <div>
                         <h3 style="font-size: 22px; color: var(--text-main);">Imusic for Android</h3>
-                        <p style="font-size: 14px; color: var(--text-sub);">版本: 1.7.0</p>
+                        <p style="font-size: 14px; color: var(--text-sub);">版本: 1.8.0</p>
                     </div>
                 </div>
                 <button class="upload-btn" onclick="showDownloadInfo('Android')" style="padding: 12px 24px; font-size: 16px;">立即下载</button>
@@ -56,7 +56,7 @@
                     <i class="fa fa-apple" aria-hidden="true" style="font-size: 48px; color: var(--primary-color);"></i>
                     <div>
                         <h3 style="font-size: 22px; color: var(--text-main);">Imusic for MacOS</h3>
-                        <p style="font-size: 14px; color: var(--text-sub);">版本: 1.7.0</p>
+                        <p style="font-size: 14px; color: var(--text-sub);">版本: 1.8.0</p>
                     </div>
                 </div>
                 <button class="upload-btn" onclick="showDownloadInfo('MacOS')" style="padding: 12px 24px; font-size: 16px;">立即下载</button>
@@ -79,7 +79,7 @@
                 <p id="downloadPlatformName" style="margin-bottom: 15px; font-size: 18px; font-weight: bold;"></p>
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
                     <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                    <span id="downloadVersion">版本: 1.7.0</span>
+                    <span id="downloadVersion">版本: 1.8.0</span>
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
                     <i></i>
@@ -114,12 +114,6 @@
     </div>
 
     <script>
-        document.addEventListener('contextmenu', function (e) {
-                e.preventDefault();
-        });
-        document.addEventListener('selectstart', function(e) {
-                e.preventDefault();
-        });
         window.addEventListener('load', function() {
             setTimeout(function() {
                 const loadingOverlay = document.getElementById('loadingOverlay');
@@ -218,6 +212,4 @@
         });
     </script>
 </body>
-
 </html>
-
