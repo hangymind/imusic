@@ -211,7 +211,7 @@ https://example.com/song2.mp3
                     <h4>Imusic 通知</h4>
                     <ul>
                         <li>Hotfix#1:添加了对svg码的水印支持，修改了歌词发光和ui布局</li>
-                        <li>Hotfix#2:修复了一堆问题懒得说了</li>
+                        <li>Hotfix#3:可以修改音乐人，可以后台播放</li>
                         <li>Imusic现在采用热更新模式</li>
                         <li>Build:1.8.025100810h21m37s</li>
                     </ul>
@@ -334,35 +334,34 @@ https://example.com/song2.mp3
 
         </div>
     </div>
-    <!--移除的更新提示弹窗qwq-->
-    <!--<div class="modal" id="updateModal">
+   <div class="modal" id="forceUpdate">
         <div class="modal-content">
             <h3>发现新版本</h3>
             <div class="update-info">
-                <p>当前版本：<span id="currentVersion">1.3</span></p>
-                <p>最新版本：<span id="latestVersion"></span></p>
+                <p>当前版本：<span id="currentVersion">1.8.0</span></p>
+                <p>最新版本：<span id="latestVersion">客户端更新1.8.0</span></p>
                 <p>更新内容：<br>
                     <ul id="updateContent">
+                        <li>添加了后台播放，制作了系统托盘相关内容</li>
                     </ul>
                 </p>
             </div>
             <div class="update-buttons">
                 <button class="upload-btn" id="downloadUpdateBtn">下载更新</button>
-                <button class="upload-btn" onclick="closeModal('updateModal')">稍后</button>
             </div>
         </div>
-    </div>-->
-
-  
+    </div>
     <div class="modal" id="renameModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>重命名歌曲</h3>
+                <h3>编辑歌曲</h3>
                 <button class="modal-close-btn" onclick="closeModal('renameModal')">✕</button>
             </div>
             <div class="url-input-section">
                 <label for="newSongName">新的歌曲名称：</label>
                 <input type="text" id="newSongName" placeholder="输入新的歌曲名称...">
+                <label for="newArtistName" style="margin-top: 15px;">这首歌的音乐人：</label>
+                <input type="text" id="newArtistName" placeholder="输入新的音乐人..." style="margin-top: 5px;">
                 <p id="renameError" style="color: #ff4d4f; margin-top: 8px; font-size: 13px; display: none;"></p>
             </div>
             <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
