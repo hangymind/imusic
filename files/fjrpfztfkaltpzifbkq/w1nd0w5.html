@@ -204,18 +204,17 @@ https://example.com/song2.mp3
             </div>
             <div class="changelog-content">
                 <div class="changelog-item">
-                    <h4>新版本:1.7.0</h4>
+                    <h4>新版本:1.8.0</h4>
                     <ul>                     
-                        <li><h3>修复了api问题</h3></li>
-                        <li>添加了音乐搜索完整功能</li>
-                        <li>歌词现在是居中对齐</li>
-                        <li>引用了fa icon图标</li>
+                        <li>添加了主播模式，打开后可以添加自定义水印</li>
+                        <li>对图标和部分按钮布局和样式进行了修改</li>
+                        <li>修复了手机端音乐搜索后无法添加的问题</li>
+                        <li>正式发布了发光边缘自定义功能</li>
                     </ul>
                     <h4>Imusic 通知</h4>
                     <ul>
-                        <li>Hotfix#1:回调设置按钮和播放列表按钮样式</li>
                         <li>Imusic现在采用热更新模式</li>
-                        <li>Build:1.7.025092422h51m46s</li>
+                        <li>Build:1.8.025100810h21m37s</li>
                     </ul>
                     
                 </div>
@@ -247,6 +246,20 @@ https://example.com/song2.mp3
                             <label>音量调节</label>
                             <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="100">
                             <span id="volumeValue">100%</span>
+                        </div>
+                        
+                        <div class="streamer-mode" style="margin-top: 15px;">
+                            <label>主播模式</label>
+                            <label class="theme-switch">
+                                <input type="checkbox" id="streamerModeToggle">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="streamer-watermark" style="margin-top: 15px;">
+                            <label>水印内容</label>
+                            <input type="text" id="watermarkText" placeholder="输入水印内容" style="width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg-btn); color: var(--text-main);">
+                            <p style="font-size: 12px; color: var(--text-weak); margin-top: 5px;">主播模式开启后，水印将显示在播放器页面正下方</p>
                         </div>
                         
                         <div class="update-check" style="margin-top: 15px;">
@@ -291,7 +304,7 @@ https://example.com/song2.mp3
                         </div>
                          
                         <div class="theme-glow-custom" style="margin-top: 20px;">
-                            <label style="display: block; margin-bottom: 10px; color: var(--text-sub);">发光颜色设置(Beta)</label>
+                            <label style="display: block; margin-bottom: 10px; color: var(--text-sub);">发光颜色设置</label>
                             <div style="display: flex; gap: 10px; align-items: center;">
                                 <input type="color" id="glowColorPicker" value="#ffffff" style="width: 50px; height: 30px; border-radius: 4px; border: none; cursor: pointer;">
                                 <button class="upload-btn" id="resetGlowBtn" style="padding: 6px 12px; font-size: 12px;">重置发光色</button>
@@ -306,10 +319,10 @@ https://example.com/song2.mp3
                     <div id="about-settings" class="settings-page">
                         <div class="about-content">
                             <h4>关于</h4>
-                            <p>版本：1.7.0</p>
+                            <p>版本：1.8.0</p>
                             <p>作者：iw46</p>
-                            <p>Bug修复:Doubao-speed-1.6</p>
-                            <p>Build: 1.7.025092422h51m46s</p>
+                            <p>问题修复:Qwen-3-Coder</p>
+                            <p>Build: 1.8.025100810h21m37s</p>
                             <p>© iw46Team 2025</p>
                             <div style="margin-top: 10px;">
                                 <a href="https://imusicapp.netlify.app/files/yinsi1" target="_blank" style="color: var(--primary-color); text-decoration: none; margin-right: 15px;">隐私协议</a>
@@ -406,4 +419,3 @@ https://example.com/song2.mp3
 </body>
 
 </html>
-
