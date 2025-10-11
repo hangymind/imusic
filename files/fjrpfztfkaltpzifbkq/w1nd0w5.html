@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="nerd.ico">
     <title>Imusic</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <style>
         @import url('112233.css');
     </style>
@@ -18,6 +19,7 @@
     </div>
     <div class="search-btn-container">
         <button class="search-btn" id="searchBtn"><i class="fa fa-search" style="font-size:25px;"></i></button>
+        <button class="search-btn" id="chatBtn" style="display: none;"><i class="fa fa-comments" aria-hidden="true" style="font-size:25px;"></i></button>
     </div>
     
     <div class="search-modal" id="searchModal">
@@ -67,6 +69,19 @@
         <button class="upload-btn" id="playlistBtn"><i class="fa fa-list" aria-hidden="true" style="font-size:25px;"></i></button>
         <button class="upload-btn" id="settingsBtn"><i class="fa fa-cog" aria-hidden="true" style="font-size:25px;"></i></button>
         
+    </div>
+    
+    <!-- 聊天界面 -->
+    <div id="chatContainer" class="chat-container">
+        <div class="chat-header">
+            <h3>聊天室</h3>
+            <button class="chat-close-btn" id="closeChatBtn">✕</button>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input-container">
+            <input type="text" id="chatInput" placeholder="输入消息...">
+            <button id="sendChatBtn">发送</button>
+        </div>
     </div>
 
     <div class="controls">
@@ -342,9 +357,7 @@ https://example.com/song2.mp3
                 <p>最新版本：<span id="latestVersion">客户端更新1.8.0</span></p>
                 <p>更新内容：<br>
                     <ul id="updateContent">
-                        <li>想这个窗口了吗？现在它只会在客户端更新的时候出现！</li>
                         <li>添加了后台播放，制作了系统托盘相关内容</li>
-                        <li>本次更新提示停留三天</li>
                     </ul>
                 </p>
             </div>
@@ -419,4 +432,3 @@ https://example.com/song2.mp3
 </body>
 
 </html>
-
