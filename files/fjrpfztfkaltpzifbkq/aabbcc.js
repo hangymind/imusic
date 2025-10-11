@@ -1,6 +1,6 @@
 
 let debugMode = false;
-const appVersion = "1.8.025100810h21m37s"; 
+const appVersion = "1.9.025101117h46m29s"; 
 let debugLogEntries = [];
 document.addEventListener('DOMContentLoaded', function() {
     let debugPanel = document.createElement('div');
@@ -75,7 +75,7 @@ function showTopRightToast(message, duration = 3000) {
 }
 window.addEventListener('load', () => {
     if (showToastOnLoad) {
-        showTopRightToast('开学快乐嘿嘿嘿呱');//我在这输入文字
+        showTopRightToast('卧槽全新架构');//我在这输入文字
     }
 });
 
