@@ -5,7 +5,7 @@
   "scripts": {
     "start": "electron .",
     "p": "electron-packager ./ Imusic --platform=win32 --arch=x64 --out=dist --icon=nerd.ico",
-    "pmac": "electron-packager ./ Imusic --mac --x64 --out=dist --icon=nerd.ico"
+    "pmac": "electron-packager ./ Imusic --mac --x64 --out=dist --icon=nerd.ico",
     "build":"(npm install)&&(node socket-server.js)"
  
     
