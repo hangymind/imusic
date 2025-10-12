@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -202,19 +201,16 @@ https://example.com/song2.mp3
             </div>
             <div class="changelog-content">
                 <div class="changelog-item">
-                    <h4>新版本:1.8.0</h4>
+                    <h4>新版本:1.9.0</h4>
                     <ul>                     
-                        <li>添加了主播模式，打开后可以添加自定义水印</li>
-                        <li>对图标和部分按钮布局和样式进行了修改</li>
-                        <li>修复了手机端音乐搜索后无法添加的问题</li>
-                        <li>正式发布了发光边缘自定义功能</li>
+                        <li>添加了歌词设置</li>
+                        <li>添加了彩蛋</li>
                     </ul>
                     <h4>Imusic 通知</h4>
                     <ul>
-                        <li>Hotfix#1:添加了对svg码的水印支持，修改了歌词发光和ui布局</li>
-                        <li>Hotfix#3:可以修改音乐人，可以后台播放</li>
+                        
                         <li>Imusic现在采用热更新模式</li>
-                        <li>Build:1.8.025100810h21m37s</li>
+                        <li>Build:1.9.025101223h32m35s</li>
                     </ul>
                     
                 </div>
@@ -236,6 +232,7 @@ https://example.com/song2.mp3
             <div class="settings-container">
                 <div class="settings-sidebar">
                     <div class="settings-item active" data-page="playback">通用设置</div>
+                    <div class="settings-item" data-page="lyrics">歌词设置</div>
                     <div class="settings-item" data-page="appearance">外观设置</div>
                     <div class="settings-item" data-page="order">播放顺序</div>
                     <div class="settings-item" data-page="about">关于</div>
@@ -272,6 +269,26 @@ https://example.com/song2.mp3
                             <button class="upload-btn" id="checkUpdateBtn">检查更新</button>
                             <span id="updateStatus" style="margin-left: 10px; color: var(--text-sub); font-size: 13px;"></span>
                         </div>-->
+                    </div>
+                    
+                    <div id="lyrics-settings" class="settings-page">
+                        <div class="lyrics-font-size">
+                            <label>歌词字体大小</label>
+                            <input type="range" class="lyrics-font-slider" id="lyricsFontSlider" min="12" max="30" value="18">
+                            <span id="lyricsFontValue">18px</span>
+                        </div>
+                        
+                        <div class="lyrics-active-font-size" style="margin-top: 15px;">
+                            <label>高亮歌词字体大小</label>
+                            <input type="range" class="lyrics-active-font-slider" id="lyricsActiveFontSlider" min="12" max="36" value="22">
+                            <span id="lyricsActiveFontValue">22px</span>
+                        </div>
+                        
+                        <div class="lyrics-glow-brightness" style="margin-top: 15px;">
+                            <label>歌词发光亮度</label>
+                            <input type="range" class="lyrics-glow-slider" id="lyricsGlowSlider" min="0" max="30" value="15">
+                            <span id="lyricsGlowValue">15px</span>
+                        </div>
                     </div>
                     
                     <div id="appearance-settings" class="settings-page">
@@ -319,10 +336,10 @@ https://example.com/song2.mp3
                     <div id="about-settings" class="settings-page">
                         <div class="about-content">
                             <h4>关于</h4>
-                            <p>版本：1.8.0</p>
+                            <p>版本：1.9.0</p>
                             <p>作者：iw46</p>
                             <p>问题修复:Qwen-3-Coder</p>
-                            <p>Build: 1.8.025100810h21m37s</p>
+                            <p>Build: 1.9.025101223h32m35s</p>
                             <p>© iw46Team 2025</p>
                             <div style="margin-top: 10px;">
                                 <a href="https://imusicapp.netlify.app/files/yinsi1" target="_blank" style="color: var(--primary-color); text-decoration: none; margin-right: 15px;">隐私协议</a>
@@ -417,6 +434,16 @@ https://example.com/song2.mp3
             }
         });
     </script>
+    <div id="scrollPanel" class="scroll-panel">
+        <div class="scroll-panel-content">
+            <h2>彩damn</h2>
+            <div id="woodenFishButton" class="wooden-fish-button">
+                <div class="wooden-fish-icon">💀</div>
+                <div class="click-instruction">戳戳</div>
+                <div id="clickCount" class="click-count">敲击次数: 0</div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
