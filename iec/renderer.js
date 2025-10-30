@@ -392,7 +392,8 @@ function saveAllSettings() {
 function handleAboutClick(event) {
   event.preventDefault();
   menu.classList.add('hidden');
-  alert('这个地方是关于，我懒得写ui，用这个凑活一下。\n我知道各位新高一最喜欢高考了(bushi，不仅是人生的进步，更是为了达成一些久违的愿望。我不妨来猜想一下，当实现它的那一刻，也许是留住了童年，或是为童年的臆想留下了能回忆的影子\n软件制作:iw46\n©iw46Team 2025，保留所有权利。');
+  alert('软件制作:xzy\n©xzyiT，保留所有权利。')
+  //alert('这个地方是关于，我懒得写ui，用这个凑活一下。\n我知道各位新高一最喜欢高考了(bushi，不仅是人生的进步，更是为了达成一些久违的愿望。我不妨来猜想一下，当实现它的那一刻，也许是留住了童年，或是为童年的臆想留下了能回忆的影子\n软件制作:iw46\n©iw46Team 2025，保留所有权利。');
 }
 function initApp() {
   updateTitle(); // 初始化标题
