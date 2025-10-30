@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iexamcd</title>
+  <link rel="icon" href="clock1.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<script>window.nodeRequire = require;</script>
+  <div class="container">
+    <button id="menuButton" class="menu-button">⋮</button>
+    <div id="menu" class="menu hidden">
+      <a href="#" id="settingsOption" class="menu-item">设置</a>
+      <a href="#" id="aboutOption" class="menu-item">关于</a>
+    </div>
+    <div id="settingsPanel" class="settings-panel hidden">
+      <h2>设置</h2>
+      <div class="setting-item">
+        <label class="switch">
+          <input type="checkbox" id="alwaysOnTop">
+          <span class="slider"></span>
+        </label>
+        <span class="setting-label">窗口置顶</span>
+      </div>
+      <div class="setting-item">
+        <label class="switch">
+          <input type="checkbox" id="autoStart">
+          <span class="slider"></span>
+        </label>
+        <span class="setting-label">开机自启动</span>
+      </div>
+      <div class="setting-item">
+        <label class="switch">
+          <input type="checkbox" id="showPreciseTime">
+          <span class="slider"></span>
+        </label>
+        <span class="setting-label">显示精确时间</span>
+      </div>
+      <div class="setting-item">
+        <label class="switch">
+          <input type="checkbox" id="fixedPosition">
+          <span class="slider"></span>
+        </label>
+        <span class="setting-label">固定窗口位置</span>
+      </div>
+      <div class="setting-item">
+        <label class="setting-label">背景透明度</label>
+        <input type="range" id="backgroundOpacity" min="0" max="100" value="95">
+      </div>
+      <div class="setting-item">
+        <label class="setting-label">字体颜色</label>
+        <input type="color" id="fontColor" value="#ffffff">
+      </div>
+      <div class="setting-item">
+        <label class="setting-label">目标日期</label>
+        <input type="date" id="targetDate" value="2028-06-10">
+      </div>
+      <button id="closeSettings" class="close-button">关闭</button>
+    </div>
+    <div class="content">
+      <h1 class="title">距离2028年6月10日还有</h1>
+      <div class="countdown">
+        <div class="days">
+          <span id="daysCount">0Day00:00:00</span>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div id="progressFill" class="progress-fill"></div>
+          </div>
+          <div id="percentage" class="percentage">0.00%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="renderer.js"></script>
+</body>
+</html>
