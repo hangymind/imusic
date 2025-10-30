@@ -1,0 +1,435 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 15px;
+  overflow: hidden;
+  user-select: none; /* 防止文本被选中 */
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out forwards;
+  -webkit-app-region: drag; /* 默认整个窗口可拖动 */
+}
+
+body.fixed-position {
+  -webkit-app-region: no-drag; /* 固定位置时禁用拖动 */
+}
+
+/* 菜单按钮和设置面板不参与拖动 */
+.menu-button,
+.menu,
+.settings-panel,
+input[type="range"],
+input[type="color"],
+button,
+.switch {
+  -webkit-app-region: no-drag;
+}
+
+/* 淡入动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+}
+
+/* 菜单按钮样式 */
+.menu-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.3s ease;
+}
+
+.menu-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* 菜单样式 */
+.menu {
+  position: absolute;
+  top: 60px;
+  right: 15px;
+  background: rgba(30, 30, 30, 0.95);
+  border-radius: 8px;
+  padding: 10px 0;
+  min-width: 150px;
+  z-index: 20;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.menu:not(.hidden) {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.menu.hidden {
+  display: block;
+  visibility: hidden;
+}
+
+.menu-item {
+  padding: 10px 20px;
+  color: white;
+  text-decoration: none;
+  display: block;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  padding-left: 25px;
+}
+
+.menu-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  background: #4facfe;
+  transition: height 0.3s ease;
+}
+
+.menu-item:hover::before {
+  height: 70%;
+}
+
+/* 设置面板样式 */
+.settings-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(30, 30, 30, 0.95);
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  max-height: 80vh;
+  z-index: 30;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  overflow-y: auto;
+}
+
+.settings-panel:not(.hidden) {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.settings-panel.hidden {
+  display: block;
+  visibility: hidden;
+}
+
+/* 自定义滚动条样式 */
+.settings-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.settings-panel::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.settings-panel::-webkit-scrollbar-thumb {
+  background: rgba(79, 172, 254, 0.5);
+  border-radius: 4px;
+}
+
+.settings-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(79, 172, 254, 0.8);
+}
+
+.settings-panel h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ffffffcc;
+}
+
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+}
+
+.setting-label {
+  color: white;
+  font-size: 16px;
+}
+
+/* 滑块样式 */
+input[type="range"] {
+  width: 100px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #4facfe;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* 颜色选择器样式 */
+input[type="color"] {
+  width: 40px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 5px;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.close-button {
+  width: 100%;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: background 0.3s ease;
+}
+
+.close-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* 开关样式 */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4facfe;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.content {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #ffffffcc;
+}
+
+.countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.days {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 1px;
+  position: relative;
+  display: inline-block;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* 时间数字变化时的微动画 */
+.days span {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 时间单位样式 */
+.days .time-unit {
+  font-weight: 700;
+  margin: 0 2px;
+  opacity: 0.9;
+}
+
+/* 特别为"Day"单位设置样式 */
+.days .time-unit.day {
+  color: #00b3ff;
+  font-weight: 700;
+}
+
+/* 时间分隔符样式 */
+.days .time-separator {
+  margin: 0 1px;
+  opacity: 0.7;
+}
+
+/* 时间值样式 */
+.time-value {
+  display: inline-block;
+  min-width: 1.2em;
+  text-align: center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
+}
+
+/* 变化的时间值样式 */
+.time-value.changed {
+  color: #4facfe;
+  text-shadow: 0 0 8px rgba(79, 172, 254, 0.8);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.days .label {
+  font-size: 20px;
+  color: #ffffffcc;
+  margin-left: 5px;
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #00b3ff;
+  border-radius: 6px;
+  width: 0%;
+  transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  box-shadow: 0 0 10px rgba(0, 179, 255, 0.5);
+}
+
+.percentage {
+  font-size: 18px;
+  font-weight: 600;
+  min-width: 60px;
+  text-align: right;
+  color: #ffffffcc;
+}
+
+/* 日期选择器样式 */
+input[type="date"] {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  color: white;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+input[type="date"]:focus {
+  outline: none;
+  border-color: #4facfe;
+  box-shadow: 0 0 5px rgba(79, 172, 254, 0.5);
+}
+
+/* 日期选择器下拉箭头样式 */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
