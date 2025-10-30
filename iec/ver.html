@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iexamcd Files</title>
+  
+</head>
+<body>
+  <h1><b>ok</b></h1>
+  <h2>Downloading Iexamcd...</h2>
+    <script>
+        
+        const targetUrl = "https://easylink.cc/42wlk1";
+        
+       
+        let seconds = 3;
+        const countdownElement = document.getElementById("countdown");
+        
+        const countdownInterval = setInterval(() => {
+            seconds--;
+            if (seconds >= 0) {
+                countdownElement.textContent = seconds;
+            } else {
+                clearInterval(countdownInterval);
+            }
+        }, 1000);
+        setTimeout(() => {
+            window.location.href = targetUrl;
+        }, 3000);
+    </script>
+</body>
+</html>
