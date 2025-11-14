@@ -15,6 +15,13 @@
         <div class="loading-content">
             <img src="musicwt.png" alt="Imusic" class="loading-image">
         </div>
+        <div class="overlay-animation" id="overlayAnimation">
+            <div class="loading-text-container">
+                <div class="water-flow-container">
+                    <span class="loading-text" id="loadingText">loading...</span>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="search-btn-container">
         <button class="search-btn" id="searchBtn"><i class="fa fa-search" style="font-size:25px;"></i></button>
@@ -201,16 +208,19 @@ https://example.com/song2.mp3
             </div>
             <div class="changelog-content">
                 <div class="changelog-item">
-                    <h4>新版本:1.9.0</h4>
+                    <h4>新版本:2.0.0</h4>
                     <ul>                     
                         <li>添加了歌词设置</li>
-                        <li>添加了彩蛋</li>
+                        <li>添加了收藏功能</li>
+                        <li>添加了小窗播放</li>
+                        <li>修改了鼠标样式</li>
+                        <li>添加了15+技术修复</li>
                     </ul>
                     <h4>Imusic 通知</h4>
                     <ul>
                         
                         <li>Imusic现在采用热更新模式</li>
-                        <li>Build:1.9.025101223h32m35s</li>
+                        <li>Build:2.0.02025111418h49min34s</li>
                     </ul>
                     
                 </div>
@@ -259,6 +269,15 @@ https://example.com/song2.mp3
                             <p style="font-size: 12px; color: var(--text-weak); margin-top: 5px;">主播模式开启后，水印将显示在播放器页面正下方</p>
                         </div>
                         
+                        <div class="mini-player-mode" style="margin-top: 15px;">
+                            <label>后台播放显示弹窗</label>
+                            <label class="theme-switch">
+                                <input type="checkbox" id="miniPlayerToggle">
+                                <span class="slider"></span>
+                            </label>
+                            <p style="font-size: 12px; color: var(--text-weak); margin-top: 5px;">关闭主窗口时在屏幕右下角显示迷你播放器</p>
+                        </div>
+                        
                         <div class="update-check" style="margin-top: 15px;">
                             <label>更新日志</label>
                             <button class="upload-btn" id="viewChangelogBtn">查看更新日志</button>
@@ -272,22 +291,49 @@ https://example.com/song2.mp3
                     </div>
                     
                     <div id="lyrics-settings" class="settings-page">
+                        <div class="lyrics-alignment" style="margin-top: 15px;">
+                            <label>歌词对齐方式</label>
+                            <div class="alignment-options">
+                                <button class="alignment-btn" data-align="left" id="alignLeftBtn">靠左</button>
+                                <button class="alignment-btn" data-align="center" id="alignCenterBtn">居中</button>
+                                <button class="alignment-btn" data-align="right" id="alignRightBtn">靠右</button>
+                            </div>
+                        </div>
+                        
                         <div class="lyrics-font-size">
                             <label>歌词字体大小</label>
-                            <input type="range" class="lyrics-font-slider" id="lyricsFontSlider" min="12" max="30" value="18">
-                            <span id="lyricsFontValue">18px</span>
+                            <div class="slider-container">
+                                <input type="range" class="lyrics-font-slider" id="lyricsFontSlider" min="12" max="30" value="18">
+                                <span id="lyricsFontValue">18px</span>
+                                <button class="upload-btn reset-btn" id="resetLyricsFontBtn" title="重置歌词字体大小">重置</button>
+                            </div>
                         </div>
                         
                         <div class="lyrics-active-font-size" style="margin-top: 15px;">
                             <label>高亮歌词字体大小</label>
-                            <input type="range" class="lyrics-active-font-slider" id="lyricsActiveFontSlider" min="12" max="36" value="22">
-                            <span id="lyricsActiveFontValue">22px</span>
+                            <div class="slider-container">
+                                <input type="range" class="lyrics-active-font-slider" id="lyricsActiveFontSlider" min="12" max="36" value="22">
+                                <span id="lyricsActiveFontValue">22px</span>
+                                <button class="upload-btn reset-btn" id="resetLyricsActiveFontBtn" title="重置高亮歌词字体大小">重置</button>
+                            </div>
                         </div>
                         
                         <div class="lyrics-glow-brightness" style="margin-top: 15px;">
                             <label>歌词发光亮度</label>
-                            <input type="range" class="lyrics-glow-slider" id="lyricsGlowSlider" min="0" max="30" value="15">
-                            <span id="lyricsGlowValue">15px</span>
+                            <div class="slider-container">
+                                <input type="range" class="lyrics-glow-slider" id="lyricsGlowSlider" min="0" max="30" value="15">
+                                <span id="lyricsGlowValue">15px</span>
+                                <button class="upload-btn reset-btn" id="resetLyricsGlowBtn" title="重置歌词发光亮度">重置</button>
+                            </div>
+                        </div>
+                        
+                        <div class="lyrics-delay" style="margin-top: 15px;">
+                            <label>歌词延时显示</label>
+                            <div class="slider-container">
+                                <input type="range" class="lyrics-delay-slider" id="lyricsDelaySlider" min="-5" max="5" step="0.1" value="0">
+                                <span id="lyricsDelayValue">0.0s</span>
+                                <button class="upload-btn reset-btn" id="resetLyricsDelayBtn" title="重置歌词延时">重置</button>
+                            </div>
                         </div>
                     </div>
                     
@@ -314,7 +360,7 @@ https://example.com/song2.mp3
                          <div class="theme-color-custom" style="margin-top: 20px;">
                             <label style="display: block; margin-bottom: 10px; color: var(--text-sub);">自定义主题色</label>
                             <div style="display: flex; gap: 10px; align-items: center;">
-                                <input type="color" id="primaryColorPicker" value="#ffffff" style="width: 50px; height: 30px; border-radius: 4px; border: none; cursor: pointer;">
+                                <input type="color" id="primaryColorPicker" value="#ffffff" style="width: 50px; height: 30px; border-radius: 4px; border: none; cursor: pointer; cursor: url('ctmcur/Hand.cur'), pointer;">
                                 <button class="upload-btn" id="resetThemeBtn" style="padding: 6px 12px; font-size: 12px;">重置颜色</button>
                             </div>
                             <p style="font-size: 12px; color: var(--text-weak); margin-top: 5px;">选择喜欢的主题色，将应用于按钮、滑块等元素</p>
@@ -323,7 +369,7 @@ https://example.com/song2.mp3
                         <div class="theme-glow-custom" style="margin-top: 20px;">
                             <label style="display: block; margin-bottom: 10px; color: var(--text-sub);">发光颜色设置</label>
                             <div style="display: flex; gap: 10px; align-items: center;">
-                                <input type="color" id="glowColorPicker" value="#ffffff" style="width: 50px; height: 30px; border-radius: 4px; border: none; cursor: pointer;">
+                                <input type="color" id="glowColorPicker" value="#ffffff" style="width: 50px; height: 30px; border-radius: 4px; border: none; cursor: pointer; cursor: url('ctmcur/Hand.cur'), pointer;">
                                 <button class="upload-btn" id="resetGlowBtn" style="padding: 6px 12px; font-size: 12px;">重置发光色</button>
                             </div>
                             <p style="font-size: 12px; color: var(--text-weak); margin-top: 5px;">选择加载界面图片发光和歌词高亮发光颜色</p>
@@ -336,10 +382,10 @@ https://example.com/song2.mp3
                     <div id="about-settings" class="settings-page">
                         <div class="about-content">
                             <h4>关于</h4>
-                            <p>版本：1.9.0</p>
+                            <p>版本：2.0.0</p>
                             <p>作者：iw46</p>
                             <p>问题修复:Qwen-3-Coder</p>
-                            <p>Build: 1.9.025101223h32m35s</p>
+                            <p>Build: 2.0.02025111418h49min34s</p>
                             <p>© iw46Team 2025</p>
                             <div style="margin-top: 10px;">
                                 <a href="https://imusicapp.netlify.app/files/yinsi1" target="_blank" style="color: var(--primary-color); text-decoration: none; margin-right: 15px;">隐私协议</a>
@@ -419,6 +465,7 @@ https://example.com/song2.mp3
 
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="aabbcc.js"></script>
+    <script src="qwen3-logic.js"></script>
     <script src="doubao1.6-logic.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -436,11 +483,18 @@ https://example.com/song2.mp3
     </script>
     <div id="scrollPanel" class="scroll-panel">
         <div class="scroll-panel-content">
-            <h2>彩damn</h2>
-            <div id="woodenFishButton" class="wooden-fish-button">
-                <div class="wooden-fish-icon">💀</div>
-                <div class="click-instruction">戳戳</div>
-                <div id="clickCount" class="click-count">敲击次数: 0</div>
+            <h2>我的收藏</h2>
+            <div class="favorites-header">
+                <div class="favorites-actions">
+                    <button class="upload-btn" id="favoritesViewToggle" data-view="grid" title="切换视图">
+                        <i class="fa fa-th-large" aria-hidden="true"></i> 网格视图
+                    </button>
+                    <button class="upload-btn" id="importFavoritesBtn" title="导入收藏">导入</button>
+                    <button class="upload-btn" id="exportFavoritesBtn" title="导出收藏">导出</button>
+                </div>
+            </div>
+            <div id="favoritesContainer" class="favorites-grid">
+                <div class="no-favorites">暂无收藏的歌曲</div>
             </div>
         </div>
     </div>
