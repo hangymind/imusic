@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="nerd.ico">
+    <title>Imusic</title>
+    <style>
+        @import url('112233.css');
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <img src="musicwt.png" alt="Imusic" class="loading-image">
+        </div>
+        <div class="overlay-animation" id="overlayAnimation">
+            <div class="loading-text-container">
+                <div class="water-flow-container">
+                    <span class="loading-text" id="loadingText">loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="search-btn-container">
+        <button class="search-btn" id="searchBtn"><i class="fa fa-search" style="font-size:25px;"></i></button>
+    </div>
+    
+    <div class="search-modal" id="searchModal">
+        <div class="search-backdrop"></div>
+        <div class="search-modal-content">
+            <input type="text" class="search-modal-input" id="searchModalInput" placeholder="搜索歌曲...">
+            <button class="search-modal-close" id="searchModalClose">✕</button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="left-panel">
+            <div class="album-cover" id="albumCover">
+                <div class="album-cover-content">
+                    <img id="coverImage" src="" alt="专辑封面">
+                    <span id="coverPlaceholder" style="color: var(--text-weak); font-size: 18px;">暂无封面</span>
+                </div>
+            </div>
+
+            <div class="time-slider">
+                <span class="time-label" id="currentTime">0:00</span>
+                <input type="range" id="timeSlider" min="0" max="100" value="0">
+                <span class="time-label" id="durationTime">0:00</span>
+            </div>
+
+            <div class="music-info">
+                <h2 id="songTitle"><b>暂无歌曲</b></h2>
+                <p id="artistName">未知的音乐人</p>
+            </div>
+            <div class="audio-controls">
+                <button class="play-btn" id="playBtn">▶</button>
+                <button class="mode-btn" id="modeBtn" title="播放模式">列表循环</button>
+            </div>
+            <audio id="audioPlayer" class="hidden"></audio>
+        </div>
+
+        <div class="right-panel">
+            <div class="lyrics-container">
+                <div class="lyrics" id="lyrics">
+                    <p>暂无歌词</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="top-buttons">
+        <button class="upload-btn" id="playlistBtn"><i class="fa fa-list" aria-hidden="true" style="font-size:25px;"></i></button>
+        <button class="upload-btn" id="settingsBtn"><i class="fa fa-cog" aria-hidden="true" style="font-size:25px;"></i></button>
+        
+    </div>
+
+    <div class="controls">
+        <button class="floating-action-btn" onclick="toggleUploadMenu()"><i class="fa fa-upload" aria-hidden="true" style="font-size:25px;"></i></button>
+        <div class="action-buttons-container">
+                <button class="upload-btn" id="uploadBtn">上传音乐</button>
+                <button class="upload-btn" id="addUrlBtn">添加URL</button>
+                <button class="upload-btn" id="uploadLyricsBtn">上传歌词</button>
+                <button class="upload-btn" id="uploadCoverBtn">上传封面</button>
+            </div>
+    </div>
+    
+    <script>
+        function toggleUploadMenu() {
+            const fab = document.querySelector('.floating-action-btn');
+            const container = document.querySelector('.action-buttons-container');
+            
+            fab.classList.toggle('active');
+            
+            if (fab.classList.contains('active')) {
+                container.style.opacity = '1';
+                container.style.visibility = 'visible';
+                container.style.transform = 'translateY(0)';
+            } else {
+                container.style.opacity = '0';
+                container.style.visibility = 'hidden';
+                container.style.transform = 'translateY(20px)';
+            }
+        }
+        document.addEventListener('click', function(event) {
+            const fab = document.querySelector('.floating-action-btn');
+            const container = document.querySelector('.action-buttons-container');
+            const controls = document.querySelector('.controls');
+            
+            if (!controls.contains(event.target) && fab.classList.contains('active')) {
+                fab.classList.remove('active');
+                container.style.opacity = '0';
+                container.style.visibility = 'hidden';
+                container.style.transform = 'translateY(20px)';
+            }
+        });
+        document.querySelectorAll('.action-buttons-container .upload-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+    </script>
+
+    <div class="modal" id="uploadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>上传文件</h3>
+                <button class="modal-close-btn" onclick="closeModal('uploadModal')">✕</button>
+            </div>
+            <div class="file-input">
+                <label>选择音乐文件（可多选）:</label>
+                <input type="file" id="musicFile" accept="audio/*" multiple>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal" id="lyricsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>上传歌词</h3>
+                <button class="modal-close-btn" onclick="closeModal('lyricsModal')">✕</button>
+            </div>
+            <div class="file-input">
+                <label>选择歌词文件 (LRC/TXT):</label>
+                <input type="file" id="lyricsFile" accept=".lrc,.txt">
+            </div>
+
+        </div>
+    </div>
+    <div class="modal" id="coverModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>上传封面</h3>
+                <button class="modal-close-btn" onclick="closeModal('coverModal')">✕</button>
+            </div>
+            <div class="file-input">
+                <label>选择图片文件:</label>
+                <input type="file" id="coverFile" accept="image/*">
+            </div>
+
+        </div>
+    </div>
+    <div class="modal" id="urlModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加音乐URL</h3>
+                <button class="modal-close-btn" onclick="closeModal('urlModal')">✕</button>
+            </div>
+            <div class="url-input-section">
+                <label for="musicUrl">音乐URL:</label>
+                <input type="text" id="musicUrl" placeholder="输入音乐URL...">
+                <label for="musicName">歌曲名称 (可选):</label>
+                <input type="text" id="musicName" placeholder="输入歌曲名称...">
+                <button class="add-btn" id="addSingleUrlBtn">添加单首</button>
+            </div>
+            <div class="url-input-section" style="margin-top: 20px;">
+                <label for="batchUrls">批量添加URL (每行一个):</label>
+                <textarea id="batchUrls" rows="5" placeholder="https://example.com/song1.mp3
+https://example.com/song2.mp3
+..."></textarea>
+                <button class="add-btn" id="addBatchUrlsBtn">批量添加</button>
+            </div>
+            <button class="upload-btn" id="importPlaylistBtn" title="从JSON文件导入歌单,仅支持url音乐" style="margin-bottom: 10px;">导入歌单</button>
+            <p id="urlAddStatus" style="margin-top: 10px; color: var(--text-sub); font-size: 12px;"></p>
+
+        </div>
+    </div>
+
+    <div class="modal" id="playlistModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>播放列表</h3>
+                <button class="modal-close-btn" onclick="closeModal('playlistModal')">✕</button>
+            </div>
+            <ul class="playlist" id="playlist"></ul>
+            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+                <button class="close-btn" id="exportPlaylistBtn" title="将当前歌单导出为JSON文件,仅支持url音乐" onclick="exportPlaylist(); return false;">导出歌单</button>
+    
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="changelogModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>更新日志</h3>
+                <button class="modal-close-btn" onclick="closeChangelogModal()">✕</button>
+            </div>
+            <div class="changelog-content">
+                <div class="changelog-item">
+                    <h4>新版本:2.0.0</h4>
+                    <ul>                     
+                        <li>添加了歌词设置</li>
+                        <li>添加了收藏功能</li>
+                        <li>添加了小窗播放</li>
+                        <li>修改了鼠标样式</li>
+                        <li>添加了15+技术修复</li>
+                    </ul>
+                    <h4>Imusic 通知</h4>
+                    <ul>
+                        
+                        <li>Imusic现在采用热更新模式</li>
+                        <li>Build:2.0.02025111418h49min34s</li>
+                    </ul>
+                    
+                </div>
+            </div>
+            <div class="changelog-options">
+                <input type="checkbox" id="dontShowAgain">
+                <label for="dontShowAgain">不再显示更新日志</label>
+            </div>
+
+        </div>
+    </div>
+    
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>设置</h3>
+                <button class="modal-close-btn" onclick="closeModal('settingsModal')">✕</button>
+            </div>
+            <div class="settings-container">
+                <div class="settings-sidebar">
+                    <div class="settings-item active" data-page="playback">通用设置</div>
+                    <div class="settings-item" data-page="lyrics">歌词设置</div>
+                    <div class="settings-item" data-page="appearance">外观设置</div>
+                    <div class="settings-item" data-page="order">播放顺序</div>
+                    <div class="settings-item" data-page="about">关于</div>
+                </div>
+                <div class="settings-content">
+                    <div id="playback-settings" class="settings-page active">
+                        <div class="volume-control">
+                            <label>音量调节</label>
+                            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="100">
+                            <span id="volumeValue">100%</span>
+                        </div>
+                        
+                        <div class="streamer-mode" style="margin-top: 15px;">
+                            <label>主播模式</label>
+                            <label class="theme-switch">
+                                <input type="checkbox" id="streamerModeToggle">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="streamer-watermark" style="margin-top: 15px;">
+                            <label>水印内容</label>
+                            <input type="text" id="watermarkText" placeholder="输入水印内容" style="width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg-btn); color: var(--text-main);">
+                            <p style="font-size: 12px; color: var(--text-weak); margin-top: 5px;">主播模式开启后，水印将显示在播放器页面正下方</p>
+                        </div>
+                        
+                        <div class="mini-player-mode" style="margin-top: 15px;">
+                            <label>后台播放显示弹窗</label>
+                            <label class="theme-switch">
+                                <input type="checkbox" id="miniPlayerToggle">
+                                <span class="slider"></span>
+                            </label>
+                            <p style="font-size: 12px; color: var(--text-weak); margin-top: 5px;">关闭主窗口时在屏幕右下角显示迷你播放器</p>
+                        </div>
+                        
+                        <div class="update-check" style="margin-top: 15px;">
+                            <label>更新日志</label>
+                            <button class="upload-btn" id="viewChangelogBtn">查看更新日志</button>
+                        </div>
+                        
+                        <!--<div class="update-check">
+                            <label>检查更新</label>
+                            <button class="upload-btn" id="checkUpdateBtn">检查更新</button>
+                            <span id="updateStatus" style="margin-left: 10px; color: var(--text-sub); font-size: 13px;"></span>
+                        </div>-->
+                    </div>
+                    
+                    <div id="lyrics-settings" class="settings-page">
+                        <div class="lyrics-alignment" style="margin-top: 15px;">
+                            <label>歌词对齐方式</label>
+                            <div class="alignment-options">
+                                <button class="alignment-btn" data-align="left" id="alignLeftBtn">靠左</button>
+                                <button class="alignment-btn" data-align="center" id="alignCenterBtn">居中</button>
+                                <button class="alignment-btn" data-align="right" id="alignRightBtn">靠右</button>
+                            </div>
+                        </div>
+                        
+                        <div class="lyrics-font-size">
+                            <label>歌词字体大小</label>
+                            <div class="slider-container">
+                                <input type="range" class="lyrics-font-slider" id="lyricsFontSlider" min="12" max="30" value="18">
+                                <span id="lyricsFontValue">18px</span>
+                                <button class="upload-btn reset-btn" id="resetLyricsFontBtn" title="重置歌词字体大小">重置</button>
+                            </div>
+                        </div>
+                        
+                        <div class="lyrics-active-font-size" style="margin-top: 15px;">
+                            <label>高亮歌词字体大小</label>
+                            <div class="slider-container">
+                                <input type="range" class="lyrics-active-font-slider" id="lyricsActiveFontSlider" min="12" max="36" value="22">
+                                <span id="lyricsActiveFontValue">22px</span>
+                                <button class="upload-btn reset-btn" id="resetLyricsActiveFontBtn" title="重置高亮歌词字体大小">重置</button>
+                            </div>
+                        </div>
+                        
+                        <div class="lyrics-glow-brightness" style="margin-top: 15px;">
+                            <label>歌词发光亮度</label>
+                            <div class="slider-container">
+                                <input type="range" class="lyrics-glow-slider" id="lyricsGlowSlider" min="0" max="30" value="15">
+                                <span id="lyricsGlowValue">15px</span>
+                                <button class="upload-btn reset-btn" id="resetLyricsGlowBtn" title="重置歌词发光亮度">重置</button>
+                            </div>
+                        </div>
+                        
+                        <div class="lyrics-delay" style="margin-top: 15px;">
+                            <label>歌词延时显示</label>
+                            <div class="slider-container">
+                                <input type="range" class="lyrics-delay-slider" id="lyricsDelaySlider" min="-5" max="5" step="0.1" value="0">
+                                <span id="lyricsDelayValue">0.0s</span>
+                                <button class="upload-btn reset-btn" id="resetLyricsDelayBtn" title="重置歌词延时">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="appearance-settings" class="settings-page">
+                        <div class="theme-toggle">
+                            <label>主题切换(黑/白)</label>
+                            <label class="theme-switch">
+                                <input type="checkbox" id="themeToggle">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="border-toggle">
+                            <label>显示歌词区边框发光</label>
+                            <label class="theme-switch">
+                                <input type="checkbox" id="borderToggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="border-toggle">
+                            <label>裁剪专辑封面     </label>
+                            <button class="close-btn" id="cropCoverBtn" title="裁剪专辑封面照片为圆形">裁剪专辑封面</button>
+                        </div>
+                        
+                         <div class="theme-color-custom" style="margin-top: 20px;">
+                            <label style="display: block; margin-bottom: 10px; color: var(--text-sub);">自定义主题色</label>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <input type="color" id="primaryColorPicker" value="#ffffff" style="width: 50px; height: 30px; border-radius: 4px; border: none; cursor: pointer; cursor: url('ctmcur/Hand.cur'), pointer;">
+                                <button class="upload-btn" id="resetThemeBtn" style="padding: 6px 12px; font-size: 12px;">重置颜色</button>
+                            </div>
+                            <p style="font-size: 12px; color: var(--text-weak); margin-top: 5px;">选择喜欢的主题色，将应用于按钮、滑块等元素</p>
+                        </div>
+                         
+                        <div class="theme-glow-custom" style="margin-top: 20px;">
+                            <label style="display: block; margin-bottom: 10px; color: var(--text-sub);">发光颜色设置</label>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <input type="color" id="glowColorPicker" value="#ffffff" style="width: 50px; height: 30px; border-radius: 4px; border: none; cursor: pointer; cursor: url('ctmcur/Hand.cur'), pointer;">
+                                <button class="upload-btn" id="resetGlowBtn" style="padding: 6px 12px; font-size: 12px;">重置发光色</button>
+                            </div>
+                            <p style="font-size: 12px; color: var(--text-weak); margin-top: 5px;">选择加载界面图片发光和歌词高亮发光颜色</p>
+                        </div>
+                    </div>
+                    <div id="order-settings" class="settings-page">
+                        <p style="margin-bottom:10px;color:var(--text-sub);font-size:13px;">拖拽可调整顺序，关闭设置后自动保存</p>
+                        <ol id="sortableList"></ol>
+                    </div>
+                    <div id="about-settings" class="settings-page">
+                        <div class="about-content">
+                            <h4>关于</h4>
+                            <p>版本：2.0.0</p>
+                            <p>作者：iw46</p>
+                            <p>问题修复:Qwen-3-Coder</p>
+                            <p>Build: 2.0.02025111418h49min34s</p>
+                            <p>© iw46Team 2025</p>
+                            <div style="margin-top: 10px;">
+                                <a href="https://imusicapp.netlify.app/files/yinsi1" target="_blank" style="color: var(--primary-color); text-decoration: none; margin-right: 15px;">隐私协议</a>
+                                <a href="https://imusicapp.netlify.app/files/ver/fuwu1" target="_blank" style="color: var(--primary-color); text-decoration: none;">服务政策</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+   <div class="modal" id="forceUpdate">
+        <div class="modal-content">
+            <h3>发现新版本</h3>
+            <div class="update-info">
+                <p>当前版本：<span id="currentVersion">1.8.0</span></p>
+                <p>最新版本：<span id="latestVersion">客户端更新1.8.0</span></p>
+                <p>更新内容：<br>
+                    <ul id="updateContent">
+                        <li>想这个窗口了吗？现在它只会在客户端更新的时候出现！</li>
+                        <li>添加了后台播放，制作了系统托盘相关内容</li>
+                        <li>本次更新提示停留三天</li>
+                    </ul>
+                </p>
+            </div>
+            <div class="update-buttons">
+                <button class="upload-btn" id="downloadUpdateBtn">下载更新</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="renameModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>编辑歌曲</h3>
+                <button class="modal-close-btn" onclick="closeModal('renameModal')">✕</button>
+            </div>
+            <div class="url-input-section">
+                <label for="newSongName">新的歌曲名称：</label>
+                <input type="text" id="newSongName" placeholder="输入新的歌曲名称...">
+                <label for="newArtistName" style="margin-top: 15px;">这首歌的音乐人：</label>
+                <input type="text" id="newArtistName" placeholder="输入新的音乐人..." style="margin-top: 5px;">
+                <p id="renameError" style="color: #ff4d4f; margin-top: 8px; font-size: 13px; display: none;"></p>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+                <button class="close-btn" id="cancelRenameBtn">取消</button>
+                <button class="close-btn" id="confirmRenameBtn">确认</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="cropCoverModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3>裁剪专辑封面</h3>
+                <button class="modal-close-btn" onclick="closeModal('cropCoverModal')">✕</button>
+            </div>
+            <div class="crop-container" style="position: relative; width: 100%; height: 300px; background: var(--bg-btn); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                <div id="imagePreview" style="position: relative; max-width: 100%; max-height: 100%;">
+                    <img id="cropImage" src="" alt="专辑封面" style="max-width: 100%; max-height: 100%; display: none;">
+                    <div id="cropPlaceholder" style="color: var(--text-sub); font-size: 16px;">加载封面中...</div>
+                    <div id="cropCircle" style="position: absolute; border: 2px dashed #fff; border-radius: 50%; display: none;"></div>
+                </div>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label for="zoomSlider" style="display: block; margin-bottom: 5px; color: var(--text-sub);">缩放图片：</label>
+                <input type="range" id="zoomSlider" class="zoom-slider" min="0.5" max="3" step="0.1" value="1">
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: space-between; margin-top: 20px;">
+                <button class="close-btn" id="repositionBtn">重置位置</button>
+                <div style="display: flex; gap: 10px;">
+                    <button class="close-btn" id="cancelCropBtn">取消</button>
+                    <button class="close-btn" id="confirmCropBtn">应用裁剪</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="aabbcc.js"></script>
+    <script src="qwen3-logic.js"></script>
+    <script src="doubao1.6-logic.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+                        if (window.playlist) {
+                console.log('window.playlist存在，长度为:', window.playlist.length);
+            } else {
+                console.log('window.playlist不存在');
+                window.playlist = [
+                    { title: '测试歌曲1', artist: '测试艺术家1', url: '#' },
+                    { title: '测试歌曲2', artist: '测试艺术家2', url: '#' }
+                ];
+                console.log('已创建测试播放列表');
+            }
+        });
+    </script>
+    <div id="scrollPanel" class="scroll-panel">
+        <div class="scroll-panel-content">
+            <h2>我的收藏</h2>
+            <div class="favorites-header">
+                <div class="favorites-actions">
+                    <button class="upload-btn" id="favoritesViewToggle" data-view="grid" title="切换视图">
+                        <i class="fa fa-th-large" aria-hidden="true"></i> 网格视图
+                    </button>
+                    <button class="upload-btn" id="importFavoritesBtn" title="导入收藏">导入</button>
+                    <button class="upload-btn" id="exportFavoritesBtn" title="导出收藏">导出</button>
+                </div>
+            </div>
+            <div id="favoritesContainer" class="favorites-grid">
+                <div class="no-favorites">暂无收藏的歌曲</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
