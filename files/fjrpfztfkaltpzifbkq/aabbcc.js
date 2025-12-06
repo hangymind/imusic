@@ -1280,7 +1280,13 @@ return false;
         const hideControlsConfirmModal = document.getElementById('hideControlsConfirmModal');
         const hideControlsConfirmBtn = document.getElementById('hideControlsConfirmBtn');
         const hideControlsCancelBtn = document.getElementById('hideControlsCancelBtn');
-        const controlsToHide = ['playlistBtn', 'uploadBtn', 'settingsBtn', 'searchBtn'];
+        // 使用选择器数组而不是仅ID
+        const controlsToHide = [
+            { selector: '#playlistBtn', type: 'id' },
+            { selector: '.floating-action-btn', type: 'class' }, 
+            { selector: '#settingsBtn', type: 'id' },
+            { selector: '#searchBtn', type: 'id' }
+        ];
         
         // 初始化时检查状态
         const savedHideControls = localStorage.getItem('hideControls');
@@ -1320,11 +1326,19 @@ return false;
         
         // 隐藏/显示控制按钮
         function hideControlButtons(hide) {
-            controlsToHide.forEach(btnId => {
-                const btn = document.getElementById(btnId);
-                if (btn) {
-                    btn.style.display = hide ? 'none' : '';
+            controlsToHide.forEach(control => {
+                let elements;
+                if (control.type === 'id') {
+                    elements = [document.getElementById(control.selector.slice(1))];
+                } else if (control.type === 'class') {
+                    elements = document.querySelectorAll(control.selector);
                 }
+                
+                elements.forEach(element => {
+                    if (element) {
+                        element.style.display = hide ? 'none' : '';
+                    }
+                });
             });
         }
         
