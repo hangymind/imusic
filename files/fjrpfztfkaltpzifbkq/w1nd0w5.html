@@ -208,19 +208,16 @@ https://example.com/song2.mp3
             </div>
             <div class="changelog-content">
                 <div class="changelog-item">
-                    <h4>新版本:2.0.0</h4>
+                    <h4>新版本:2.1.0</h4>
                     <ul>                     
-                        <li>添加了歌词设置</li>
-                        <li>添加了收藏功能</li>
-                        <li>添加了小窗播放</li>
-                        <li>修改了鼠标样式</li>
-                        <li>添加了15+技术修复</li>
+                       <li>添加了ui隐藏设置</li>
+                       <li>优化了设置面板滚动逻辑</li>
                     </ul>
                     <h4>Imusic 通知</h4>
                     <ul>
                         
                         <li>Imusic现在采用热更新模式</li>
-                        <li>Build:2.0.02025111418h49min34s</li>
+                        <li>Build:2.1.02025120618h33min40s</li>
                     </ul>
                     
                 </div>
@@ -276,6 +273,15 @@ https://example.com/song2.mp3
                                 <span class="slider"></span>
                             </label>
                             <p style="font-size: 12px; color: var(--text-weak); margin-top: 5px;">关闭主窗口时在屏幕右下角显示迷你播放器</p>
+                        </div>
+                        
+                        <div class="hide-controls-mode" style="margin-top: 15px;">
+                            <label>隐藏配置选项</label>
+                            <label class="theme-switch">
+                                <input type="checkbox" id="hideControlsToggle">
+                                <span class="slider"></span>
+                            </label>
+                            <p style="font-size: 12px; color: var(--text-weak); margin-top: 5px;">隐藏播放列表、上传、设置和搜索按钮，按B键可取消隐藏</p>
                         </div>
                         
                         <div class="update-check" style="margin-top: 15px;">
@@ -382,10 +388,10 @@ https://example.com/song2.mp3
                     <div id="about-settings" class="settings-page">
                         <div class="about-content">
                             <h4>关于</h4>
-                            <p>版本：2.0.0</p>
+                            <p>版本：2.1.0</p>
                             <p>作者：iw46</p>
                             <p>问题修复:Qwen-3-Coder</p>
-                            <p>Build: 2.0.02025111418h49min34s</p>
+                            <p>Build: 2.1.02025120618h33min40s</p>
                             <p>© iw46Team 2025</p>
                             <div style="margin-top: 10px;">
                                 <a href="https://imusicapp.netlify.app/files/yinsi1" target="_blank" style="color: var(--primary-color); text-decoration: none; margin-right: 15px;">隐私协议</a>
@@ -433,6 +439,21 @@ https://example.com/song2.mp3
             <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
                 <button class="close-btn" id="cancelRenameBtn">取消</button>
                 <button class="close-btn" id="confirmRenameBtn">确认</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="hideControlsConfirmModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Imusic提示</h3>
+                <button class="modal-close-btn" onclick="closeModal('hideControlsConfirmModal')">✕</button>
+            </div>
+            <div class="url-input-section">
+                <p>确定要隐藏ui吗?隐藏后可按B键取消隐藏或重启软件恢复显示</p>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+                <button class="close-btn" id="hideControlsCancelBtn">取消</button>
+                <button class="close-btn" id="hideControlsConfirmBtn">确认</button>
             </div>
         </div>
     </div>
